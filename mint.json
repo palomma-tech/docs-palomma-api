@@ -48,8 +48,8 @@
               "group": "Customers",
               "pages": [
                 "api-documentation/customers/createCustomer",
-                "api-documentation/customers/getAllCustomers",
-                "api-documentation/customers/getCustomer"
+                "api-documentation/customers/listAllCustomer",
+                "api-documentation/customers/retrieveCustomer"
               ]
             }
           ]
