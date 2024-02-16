@@ -1,0 +1,26 @@
+---
+title: Recurring Payins
+---
+
+1. **Create a [Customer](/api-documentation/customers/create)**
+
+2. **Create a [Payin Source](/api-documentation/payinSources/create)**
+
+3. **Redirect the customer**
+
+The `Payin Source` has an attribute `authUrl`. The customer will authenticate and then authorize you to debit from their account. When the customer completes the auth flow, Palomma will redirect the user back to the `redirectUrl` you provided when creating the `Payin Source`.
+
+4. **Wait for webhook notification**
+
+Palomma will send a webhook event confirming when the `Payin Source` is active.
+
+5. **Create a [Payin Request](/api-documentation/payinRequests/create)**
+
+<Tip>
+  You only need steps 1-4 for the first payin. Future payins can use the same
+  `Payin Source`.
+</Tip>
+
+6. **Wait for webhook notification**
+
+Palomma will send a webhook event notifying you when the `Payin Request` changes `status`.
