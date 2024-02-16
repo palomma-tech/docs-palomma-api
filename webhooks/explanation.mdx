@@ -66,3 +66,25 @@ app.post("/", (req, res) => {
   }
 });
 ```
+
+## Body
+
+<ResponseField name="webhookId" type="string">
+  Unique ID for webhook notification. Should only be repeated if the
+  notification fails to deliver, in which case more attempts to deliver the
+  notification might be made.
+</ResponseField>
+<ResponseField name="timestamp" type="string">
+  ISO string for when the webhook notification was created.
+</ResponseField>
+<ResponseField name="eventType" type="enum">
+  One of the following: `payin-link.update` , `payin-source.update` ,
+  `payin-request.update` , `payout-target.update` , `payout-request.update`
+</ResponseField>
+<ResponseField name="event" type="object">
+  One of the following: [Payin Link](/api-documentation/payinLinks/object) ,
+  [Payin Source](/api-documentation/payinSource/object) , [Payin
+  Request]((/api-documentation/payinRequest/object)) , [Payout
+  Target](/api-documentation/payoutTarget/object) , [Payout
+  Request](/api-documentation/payoutRequest/object)
+</ResponseField>

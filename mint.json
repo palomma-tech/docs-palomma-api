@@ -50,11 +50,12 @@
         },
         "api-documentation/payouts",
         {
-          "group": "Endpoints",
+          "group": "Core Concepts",
           "pages": [
             {
               "group": "Customers",
               "pages": [
+                "api-documentation/customers/object",
                 "api-documentation/customers/create",
                 "api-documentation/customers/list",
                 "api-documentation/customers/get"
@@ -63,6 +64,7 @@
             {
               "group": "Payin Links",
               "pages": [
+                "api-documentation/payinLinks/object",
                 "api-documentation/payinLinks/create",
                 "api-documentation/payinLinks/list",
                 "api-documentation/payinLinks/get"
@@ -71,6 +73,7 @@
             {
               "group": "Payin Sources",
               "pages": [
+                "api-documentation/payinSources/object",
                 "api-documentation/payinSources/create",
                 "api-documentation/payinSources/list",
                 "api-documentation/payinSources/get"
@@ -79,6 +82,7 @@
             {
               "group": "Payin Requests",
               "pages": [
+                "api-documentation/payinRequests/object",
                 "api-documentation/payinRequests/create",
                 "api-documentation/payinRequests/list",
                 "api-documentation/payinRequests/get"
@@ -87,6 +91,7 @@
             {
               "group": "Payout Targets",
               "pages": [
+                "api-documentation/payoutTargets/object",
                 "api-documentation/payoutTargets/create",
                 "api-documentation/payoutTargets/list",
                 "api-documentation/payoutTargets/get"
@@ -95,6 +100,7 @@
             {
               "group": "Payout Requests",
               "pages": [
+                "api-documentation/payoutRequests/object",
                 "api-documentation/payoutRequests/create",
                 "api-documentation/payoutRequests/list",
                 "api-documentation/payoutRequests/get"

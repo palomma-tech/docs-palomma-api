@@ -1485,17 +1485,6 @@ components:
           type: string
           format: date-time
           description: ISO string indicating when the payin request was last updated.
-      required:
-        - id
-        - targetMerchantAccountId
-        - customerId
-        - payinSourceId
-        - status
-        - amount
-        - amountCollected
-        - fee
-        - createdAt
-        - updatedAt
     PayoutTargetBankAccount:
       title: Bank Account
       type: object
@@ -1600,13 +1589,6 @@ components:
           type: string
           format: date-time
           description: ISO string indicating when the Payout Target was last updated.
-      required:
-        - id
-        - customerId
-        - status
-        - type
-        - createdAt
-        - updatedAt
     PayoutTargetDetails:
       type: object
       properties:
@@ -1677,17 +1659,6 @@ components:
           type: string
           format: date-time
           description: ISO string indicating when the Payout Request was last updated.
-      required:
-        - id
-        - sourceMerchantAccountId
-        - customerId
-        - payoutTargetId
-        - status
-        - amount
-        - amountSent
-        - fee
-        - createdAt
-        - updatedAt
 
   securitySchemes:
     BearerAuth:
