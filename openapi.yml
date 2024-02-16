@@ -781,15 +781,15 @@ paths:
                 reference:
                   type: string
                   description: Reference sent in by merchant to identify Payout Request.
-                sourceMerchantAccountId:
-                  description: An optional account ID of the source merchant account for this Payout Request.
-                  type: string
                 payoutTargetId:
                   type: string
                   description: Payout Target to send money to.
                 amount:
                   type: number
                   description: Amount to be sent in COP.
+                sourceMerchantAccountId:
+                  description: An optional account ID of the source merchant account for this Payout Request.
+                  type: string
       responses:
         "201":
           description: Payout Request created successfully
@@ -1341,9 +1341,9 @@ components:
           type: string
           enum:
             - bankAccount
-        phoneNumber:
-          type: string
-          description: Customer’s phone number.
+        bankAccount:
+          type: object
+          $ref: "#/components/schemas/BankAccount"
         partialPayinsEnabled:
           type: boolean
           description: Only available for bancolombia. Partial debit will be made if the account does not sufficient funds to debit the total amount.
@@ -1510,6 +1510,8 @@ components:
           type: string
           enum:
             - bankAccount
+        bankAccount:
+          $ref: "#/components/schemas/BankAccount"
     PayoutTargetTransfiya:
       title: Transfiya
       type: object
@@ -1517,7 +1519,7 @@ components:
         - customerId
         - redirectUrl
         - type
-        - bankAccount
+        - phoneNumber
       properties:
         reference:
           type: string
