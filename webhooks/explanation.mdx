@@ -9,10 +9,41 @@ Palomma sends events when something important happens. You can register a URL an
   want events to be sent to.
 </Info>
 
-## Configuring Endpoint to Receive Webhooks
+## Request Structure
 
-- Receive HTTPS POST requests with a JSON body (HTTP is acceptable for the sandbox environment)
-- Reply with a 200 status within 5 seconds to be marked as successfully delivered by Palomma
+### Headers
+
+<ResponseField name="X-Encoded-Data" type="string">
+  Base64 encoding of the request body
+</ResponseField>
+
+<ResponseField name="X-Signature" type="string">
+  Signature used to verify integrity of `X-Encoded-Data`. Computed using an
+  HMAC-SHA-256 of `X-Encoded-Data` with the `integrityKey` assigned to the
+  merchant.
+</ResponseField>
+
+### Body
+
+<ResponseField name="webhookId" type="string">
+  Unique ID for webhook notification. Should only be repeated if the
+  notification fails to deliver, in which case more attempts to deliver the
+  notification might be made.
+</ResponseField>
+<ResponseField name="timestamp" type="string">
+  ISO string for when the webhook notification was created.
+</ResponseField>
+<ResponseField name="eventType" type="enum">
+  One of the following: `payin-link.update` , `payin-source.update` ,
+  `payin-request.update` , `payout-target.update` , `payout-request.update`
+</ResponseField>
+<ResponseField name="event" type="object">
+  One of the following: [Payin Link](/api-documentation/payinLinks/object) ,
+  [Payin Source](/api-documentation/payinSource/object) , [Payin
+  Request]((/api-documentation/payinRequest/object)) , [Payout
+  Target](/api-documentation/payoutTarget/object) , [Payout
+  Request](/api-documentation/payoutRequest/object)
+</ResponseField>
 
 ## Authentication
 
@@ -67,24 +98,12 @@ app.post("/", (req, res) => {
 });
 ```
 
-## Body
+## Duplicate Requests
 
-<ResponseField name="webhookId" type="string">
-  Unique ID for webhook notification. Should only be repeated if the
-  notification fails to deliver, in which case more attempts to deliver the
-  notification might be made.
-</ResponseField>
-<ResponseField name="timestamp" type="string">
-  ISO string for when the webhook notification was created.
-</ResponseField>
-<ResponseField name="eventType" type="enum">
-  One of the following: `payin-link.update` , `payin-source.update` ,
-  `payin-request.update` , `payout-target.update` , `payout-request.update`
-</ResponseField>
-<ResponseField name="event" type="object">
-  One of the following: [Payin Link](/api-documentation/payinLinks/object) ,
-  [Payin Source](/api-documentation/payinSource/object) , [Payin
-  Request]((/api-documentation/payinRequest/object)) , [Payout
-  Target](/api-documentation/payoutTarget/object) , [Payout
-  Request](/api-documentation/payoutRequest/object)
-</ResponseField>
+Palomma will try resending webhooks that fail to deliver. In these cases, the same webhookId and timestamp will be sent.
+
+When you successfully process a webhook, we recommend you store the `webhookId`. If you see the same `webhookId` in the future, you can safely ignore it.
+
+<Warning>
+  It is important that you do not process the same webhook multiple times.
+</Warning>
