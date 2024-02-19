@@ -488,7 +488,7 @@ paths:
                   description: ID indicating which Payment Source to debit from.
                 amount:
                   type: number
-                  description: Amount to be paid in COP.
+                  description: Amount to be paid in COP. Must be greater than $1000.
                 targetMerchantAccountId:
                   description: An optional account ID of the target merchant account for this Payin Request.
                   type: string
@@ -786,7 +786,7 @@ paths:
                   description: Payout Target to send money to.
                 amount:
                   type: number
-                  description: Amount to be sent in COP.
+                  description: Amount to be sent in COP. Must be greater than $1000.
                 sourceMerchantAccountId:
                   description: An optional account ID of the source merchant account for this Payout Request.
                   type: string
@@ -1086,7 +1086,7 @@ components:
           description: URL to which the customer will be redirected after the payment process.
         amount:
           type: number
-          description: The amount to be paid in COP.
+          description: Amount to be paid in COP. Must be greater than $1000.
         type:
           type: string
           enum:
@@ -1195,7 +1195,7 @@ components:
           description: URL to which the customer will be redirected after the payment process.
         amount:
           type: number
-          description: The amount to be paid in COP.
+          description: Amount to be paid in COP. Must be greater than $1000.
         type:
           type: string
           enum:
@@ -1230,7 +1230,7 @@ components:
           description: URL to which the customer will be redirected after the payment process.
         amount:
           type: number
-          description: The amount to be paid in COP.
+          description: Amount to be paid in COP. Must be greater than $1000.
         type:
           type: string
           enum:
@@ -1268,7 +1268,7 @@ components:
           description: URL to which the customer will be redirected after the payment process.
         amount:
           type: number
-          description: The amount to be paid in COP.
+          description: Amount to be paid in COP. Must be greater than $1000.
         type:
           type: string
           enum:
@@ -1653,7 +1653,7 @@ components:
           $ref: "#/components/schemas/StatusMessage"
         amount:
           type: number
-          description: Amount to send to the customer’s Payout Target. Must be an integer.
+          description: Amount to send to the customer’s Payout Target.
           example: 100000
         amountSent:
           type: number
