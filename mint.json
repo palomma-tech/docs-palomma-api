@@ -50,7 +50,7 @@
         },
         "api-documentation/payouts",
         {
-          "group": "Core Concepts",
+          "group": "Endpoints",
           "pages": [
             {
               "group": "Customers",
