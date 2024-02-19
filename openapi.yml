@@ -1124,6 +1124,8 @@ components:
             - cancelled
           example: approved
           description: The current status of the Payin Link.
+        statusMessage:
+          $ref: "#/components/schemas/StatusMessage"
         paymentUrl:
           type: string
           description: URL to which the customer can go to complete the payment.
@@ -1373,8 +1375,7 @@ components:
           description: Status of the Payin Source.
           enum: [pending, processing, active, cancelled]
         statusMessage:
-          type: string
-          description: Further detail on the status of the Payin Source.
+          $ref: "#/components/schemas/StatusMessage"
         authUrl:
           type: string
           description: URL where the customer should be redirected to complete the account authentication and debit authorization.
@@ -1460,8 +1461,7 @@ components:
           description: Status of the Payin Request.
           example: approved
         statusMessage:
-          type: string
-          description: Gives further detail on the status of the Payin Request. Only present when status is "cancelled".
+          $ref: "#/components/schemas/StatusMessage"
         amount:
           type: number
           description: Amount to collect from the customer’s Payin Source. Must be an integer.
@@ -1569,8 +1569,7 @@ components:
           description: Status of the Payout Target.
           example: active
         statusMessage:
-          type: string
-          description: Gives further detail on the status of the Payout Target. Only present when status is "cancelled".
+          $ref: "#/components/schemas/StatusMessage"
         authUrl:
           type: string
           description: URL where the customer should be redirected to complete the Payout Target verification.
@@ -1636,8 +1635,7 @@ components:
             - cancelled
           description: Status of the Payout Request.
         statusMessage:
-          type: string
-          description: Gives further detail on the status of the Payout Request. Only present when status is "cancelled".
+          $ref: "#/components/schemas/StatusMessage"
         amount:
           type: number
           description: Amount to send to the customer’s Payout Target. Must be an integer.
@@ -1661,6 +1659,18 @@ components:
           type: string
           format: date-time
           description: ISO string indicating when the Payout Request was last updated.
+    StatusMessage:
+      type: string
+      description: Additional detail on the status. Only present when status is "cancelled".
+      enum:
+        - AUTHENTICATION_FAILED
+        - BANK_NOT_AVAILABLE
+        - CUSTOMER_CANCELLATION
+        - DECLINED_BY_BANK
+        - EXPIRED
+        - INVALID_ACCOUNT
+        - NOT_ENOUGH_FUNDS
+        - ERROR
 
   securitySchemes:
     BearerAuth:
