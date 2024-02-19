@@ -108,7 +108,8 @@
             }
           ]
         },
-        "api-documentation/advanced"
+        "api-documentation/advanced",
+        "api-documentation/errors"
       ]
     },
     {
