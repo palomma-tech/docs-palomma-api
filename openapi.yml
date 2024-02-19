@@ -53,7 +53,7 @@ paths:
                   type: string
                   description: Customer’s phone number.
       responses:
-        "201":
+        "200":
           description: Customer created successfully.
           content:
             application/json:
@@ -194,7 +194,7 @@ paths:
                 - $ref: "#/components/schemas/PayinLinkNequiButton"
                 - $ref: "#/components/schemas/PayinLinkCard"
       responses:
-        "201":
+        "200":
           description: Payin Link created successfully
           content:
             application/json:
@@ -337,7 +337,7 @@ paths:
                 - $ref: "#/components/schemas/PayinSourceBancolombiaToken"
                 - $ref: "#/components/schemas/PayinSourceNequiToken"
       responses:
-        "201":
+        "200":
           description: Payin Source created successfully
           content:
             application/json:
@@ -493,7 +493,7 @@ paths:
                   description: An optional account ID of the target merchant account for this Payin Request.
                   type: string
       responses:
-        "201":
+        "200":
           description: Payin Request created successfully
           content:
             application/json:
@@ -635,7 +635,7 @@ paths:
                 - $ref: "#/components/schemas/PayoutTargetBankAccount"
                 - $ref: "#/components/schemas/PayoutTargetTransfiya"
       responses:
-        "201":
+        "200":
           description: Payout Target created successfully
           content:
             application/json:
@@ -791,7 +791,7 @@ paths:
                   description: An optional account ID of the source merchant account for this Payout Request.
                   type: string
       responses:
-        "201":
+        "200":
           description: Payout Request created successfully
           content:
             application/json:
