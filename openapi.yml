@@ -91,6 +91,17 @@ paths:
       operationId: listCustomers
       tags:
         - customers
+      parameters:
+        - name: limit
+          in: query
+          description: Number of records to return. Default is 20. Maximum is 100.
+          schema:
+            type: integer
+        - name: cursor
+          in: query
+          description: A cursor for use in pagination. The cursor indicates where to start fetching the results.
+          schema:
+            type: string
       responses:
         "200":
           description: List of customers successfully retrieved.
@@ -103,6 +114,8 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/Customer"
+                  cursor:
+                    $ref: "#/components/schemas/CursorResponse"
         "401":
           description: Unauthorized.
           content:
@@ -235,6 +248,17 @@ paths:
       operationId: listPayinLinks
       tags:
         - Payin Links
+      parameters:
+        - name: limit
+          in: query
+          description: Number of records to return. Default is 20. Maximum is 100.
+          schema:
+            type: integer
+        - name: cursor
+          in: query
+          description: A cursor for use in pagination. The cursor indicates where to start fetching the results.
+          schema:
+            type: string
       responses:
         "200":
           description: List of payin links successfully retrieved.
@@ -247,6 +271,8 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/PayinLink"
+                  cursor:
+                    $ref: "#/components/schemas/CursorResponse"
         "401":
           description: Unauthorized.
           content:
@@ -378,6 +404,17 @@ paths:
       operationId: listPayinSources
       tags:
         - Payin Sources
+      parameters:
+        - name: limit
+          in: query
+          description: Number of records to return. Default is 20. Maximum is 100.
+          schema:
+            type: integer
+        - name: cursor
+          in: query
+          description: A cursor for use in pagination. The cursor indicates where to start fetching the results.
+          schema:
+            type: string
       responses:
         "200":
           description: List of payin sources successfully retrieved.
@@ -390,6 +427,8 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/PayinSource"
+                  cursor:
+                    $ref: "#/components/schemas/CursorResponse"
         "401":
           description: Unauthorized.
           content:
@@ -534,6 +573,17 @@ paths:
       operationId: listPayinRequests
       tags:
         - Payin Requests
+      parameters:
+        - name: limit
+          in: query
+          description: Number of records to return. Default is 20. Maximum is 100.
+          schema:
+            type: integer
+        - name: cursor
+          in: query
+          description: A cursor for use in pagination. The cursor indicates where to start fetching the results.
+          schema:
+            type: string
       responses:
         "200":
           description: List of payin requests successfully retrieved.
@@ -546,6 +596,8 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/PayinRequest"
+                  cursor:
+                    $ref: "#/components/schemas/CursorResponse"
         "401":
           description: Unauthorized.
           content:
@@ -676,6 +728,17 @@ paths:
       operationId: listPayoutTargets
       tags:
         - Payout Targets
+      parameters:
+        - name: limit
+          in: query
+          description: Number of records to return. Default is 20. Maximum is 100.
+          schema:
+            type: integer
+        - name: cursor
+          in: query
+          description: A cursor for use in pagination. The cursor indicates where to start fetching the results.
+          schema:
+            type: string
       responses:
         "200":
           description: List of payout targets successfully retrieved.
@@ -688,6 +751,8 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/PayoutTarget"
+                  cursor:
+                    $ref: "#/components/schemas/CursorResponse"
         "401":
           description: Unauthorized.
           content:
@@ -832,6 +897,17 @@ paths:
       operationId: listPayoutRequests
       tags:
         - Payout Requests
+      parameters:
+        - name: limit
+          in: query
+          description: Number of records to return. Default is 20. Maximum is 100.
+          schema:
+            type: integer
+        - name: cursor
+          in: query
+          description: A cursor for use in pagination. The cursor indicates where to start fetching the results.
+          schema:
+            type: string
       responses:
         "200":
           description: List of payout requests successfully retrieved.
@@ -844,6 +920,8 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/PayoutRequest"
+                  cursor:
+                    $ref: "#/components/schemas/CursorResponse"
         "401":
           description: Unauthorized.
           content:
@@ -1734,6 +1812,11 @@ components:
         - INVALID_ACCOUNT
         - NOT_ENOUGH_FUNDS
         - ERROR
+    CursorResponse:
+      type: string
+      nullable: true
+      description: A cursor for use in pagination. Provide this value in the cursor parameter to retrieve the next set of results. When there are no more results, the cursor will be null.
+      example: fa4c20cf2b51f6a45377c98271e3754da1e29b6827928a8e0b40da5a7d53c971aa22c50b2c8ce83484a0dd36ee0e2570a0520a4f1f4817962d95ba65059b9a28da1a5d4ac7bfe7628fb917efd20608656da58b412ea758ec341cd6dfb226f8be263cefa811848b859a5a71f90f47533e01e969d49c0ac9e4e944b3d0fbd4e207
 
   securitySchemes:
     BearerAuth:
