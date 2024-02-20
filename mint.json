@@ -17,8 +17,12 @@
   },
   "topbarLinks": [
     {
-      "name": "Support",
+      "name": "Email",
       "url": "mailto:comercios@palomma.com"
+    },
+    {
+      "name": "WhatsApp",
+      "url": "https://wa.me/message/HQIMYANUOIVCI1"
     }
   ],
   "topbarCtaButton": {
