@@ -962,7 +962,7 @@ components:
           type: string
           format: date-time
           description: ISO string indicating when the customer was updated.
-    Bank:
+    PseBank:
       type: string
       description: The list of banks supported by the Palomma API.
       enum:
@@ -1004,6 +1004,54 @@ components:
         - nequi
         - rappipay
         - scotiabankcolpatria
+    BankAccountBank:
+      type: string
+      description: The list of banks supported by the Palomma API.
+      enum:
+        - santander
+        - coofinep
+        - avvillas
+        - cotrafa
+        - movii
+        - dale
+        - confiar
+        - union
+        - rappipay
+        - nequi
+        - bancoagrario
+        - bancoomeva
+        - bancamia
+        - coopcentral
+        - citibank
+        - lulo
+        - bancodeoccidente
+        - falabella
+        - bancodebogota
+        - bancocajasocial
+        - serfinanza
+        - cfa
+        - coltefinanciera
+        - pichincha
+        - iris
+        - ban100
+        - bancopopular
+        - daviplata
+        - bancolombia
+        - finandina
+        - scotiabankcolpatria
+        - gnbsudameris
+        - itau
+        - bbva
+        - davivienda
+        - mibanco
+        - multibank
+        - mundomujer
+        - procreditcolombia
+        - bancow
+        - bancoldex
+        - juriscoop
+        - itauhelm
+        - jpmorgancolombia
     CustomerDetails:
       type: object
       properties:
@@ -1092,7 +1140,7 @@ components:
           enum:
             - pse
         bank:
-          $ref: "#/components/schemas/Bank"
+          $ref: "#/components/schemas/PseBank"
         expiration:
           type: string
           description: Date when link will expire in YYYY-MM-DD format. By default, expiration is 2 days from creation. Maximum expiration is 7 days from creation.
@@ -1432,7 +1480,7 @@ components:
       type: object
       properties:
         bank:
-          $ref: "#/components/schemas/Bank"
+          $ref: "#/components/schemas/BankAccountBank"
         accountType:
           type: string
           description: The type of the bank account.
