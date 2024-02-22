@@ -116,6 +116,9 @@ paths:
                       $ref: "#/components/schemas/Customer"
                   cursor:
                     $ref: "#/components/schemas/CursorResponse"
+                  count:
+                    type: integer
+                    description: The total number of items returned.
         "401":
           description: Unauthorized.
           content:
@@ -273,6 +276,9 @@ paths:
                       $ref: "#/components/schemas/PayinLink"
                   cursor:
                     $ref: "#/components/schemas/CursorResponse"
+                  count:
+                    type: integer
+                    description: The total number of items returned.
         "401":
           description: Unauthorized.
           content:
@@ -429,6 +435,9 @@ paths:
                       $ref: "#/components/schemas/PayinSource"
                   cursor:
                     $ref: "#/components/schemas/CursorResponse"
+                  count:
+                    type: integer
+                    description: The total number of items returned.
         "401":
           description: Unauthorized.
           content:
@@ -598,6 +607,9 @@ paths:
                       $ref: "#/components/schemas/PayinRequest"
                   cursor:
                     $ref: "#/components/schemas/CursorResponse"
+                  count:
+                    type: integer
+                    description: The total number of items returned.
         "401":
           description: Unauthorized.
           content:
@@ -753,6 +765,9 @@ paths:
                       $ref: "#/components/schemas/PayoutTarget"
                   cursor:
                     $ref: "#/components/schemas/CursorResponse"
+                  count:
+                    type: integer
+                    description: The total number of items returned.
         "401":
           description: Unauthorized.
           content:
@@ -922,6 +937,9 @@ paths:
                       $ref: "#/components/schemas/PayoutRequest"
                   cursor:
                     $ref: "#/components/schemas/CursorResponse"
+                  count:
+                    type: integer
+                    description: The total number of items returned.
         "401":
           description: Unauthorized.
           content:
