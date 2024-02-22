@@ -1489,7 +1489,7 @@ components:
           $ref: "#/components/schemas/BankAccount"
         partialPayinsEnabled:
           type: boolean
-          description: Only available for bancolombia. Partial debit will be made if the account does not sufficient funds to debit the total amount.
+          description: Only available for Bancolombia. Partial debit will be made if the account does not have sufficient funds to debit the total amount.
         authRequired:
           type: boolean
           description: Determines whether the bank account must be verified before debits are made.
