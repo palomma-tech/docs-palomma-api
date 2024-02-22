@@ -1239,7 +1239,7 @@ components:
           $ref: "#/components/schemas/PseBank"
         expiration:
           type: string
-          description: Date when link will expire in YYYY-MM-DD format. By default, expiration is 2 days from creation. Maximum expiration is 7 days from creation.
+          description: Date when link will expire in YYYY-MM-DD format. By default, expiration is on the day after the link creation. Minimum expiration is the current date and maximum expiration is 7 days from creation. Links expire shortly after the day on the expiration date ends.
         targetMerchantAccountId:
           type: string
           description: An optional account ID of the target merchant account for this Payin Link.
@@ -1303,7 +1303,7 @@ components:
             - card
         expiration:
           type: string
-          description: Date when link will expire in YYYY-MM-DD format. By default, expiration is 2 days from creation. Maximum expiration is 7 days from creation.
+          description: Date when link will expire in YYYY-MM-DD format. By default, expiration is on the day after the link creation. Minimum expiration is the current date and maximum expiration is 7 days from creation. Links expire shortly after the day on the expiration date ends.
         targetMerchantAccountId:
           type: string
           description: Account ID of the target merchant account for this Payin Link.
@@ -1346,7 +1346,7 @@ components:
             - bancolombiaButton
         expiration:
           type: string
-          description: Date when link will expire in YYYY-MM-DD format. By default, expiration is 2 days from creation. Maximum expiration is 7 days from creation.
+          description: Date when link will expire in YYYY-MM-DD format. By default, expiration is on the day after the link creation. Minimum expiration is the current date and maximum expiration is 7 days from creation. Links expire shortly after the day on the expiration date ends.
         targetMerchantAccountId:
           type: string
           description: An optional account ID of the target merchant account for this Payin Link.
@@ -1384,7 +1384,7 @@ components:
           description: The phone number of the customer, required for Nequi payments.
         expiration:
           type: string
-          description: Date when link will expire in YYYY-MM-DD format. By default, expiration is 2 days from creation. Maximum expiration is 7 days from creation.
+          description: Date when link will expire in YYYY-MM-DD format. By default, expiration is on the day after the link creation. Minimum expiration is the current date and maximum expiration is 7 days from creation. Links expire shortly after the day on the expiration date ends.
         targetMerchantAccountId:
           type: string
           description: An optional account ID of the target merchant account for this Payin Link.
@@ -1421,7 +1421,7 @@ components:
           $ref: "#/components/schemas/Card"
         expiration:
           type: string
-          description: Date when link will expire in YYYY-MM-DD format. By default, expiration is 2 days from creation. Maximum expiration is 7 days from creation.
+          description: Date when link will expire in YYYY-MM-DD format. By default, expiration is on the day after the link creation. Minimum expiration is the current date and maximum expiration is 7 days from creation. Links expire shortly after the day on the expiration date ends.
         targetMerchantAccountId:
           type: string
           description: An optional account ID of the target merchant account for this Payin Link.
