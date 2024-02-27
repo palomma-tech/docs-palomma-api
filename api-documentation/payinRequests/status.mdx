@@ -1,0 +1,10 @@
+---
+title: Status
+---
+
+| Status       | Description                                                                                                                                                          |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `processing` | The request has been sent to the bank and Palomma is waiting for response from the bank.                                                                             |
+| `approved`   | The payment has been successful.                                                                                                                                     |
+| `partial`    | The payment has been successful but the customer did not have enough funds to make the total payment. Only ocurrs for Payin Sources configured for partial payments. |
+| `cancelled`  | Error state. More detail available in `statusMessage` field. See all [Status Messages](/api-documentation/statusMessages).                                           |

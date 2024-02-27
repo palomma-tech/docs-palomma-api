@@ -536,7 +536,7 @@ paths:
                   description: ID indicating which Payment Source to debit from.
                 amount:
                   type: number
-                  description: Amount to be paid in COP. Must be greater than $1000.
+                  description: Amount to be paid in COP. Must be greater than $1.000. The maxiumum is configured per merchant but defaults to $2.000.000. Contact us if you need to increase this limit.
                 targetMerchantAccountId:
                   description: An optional account ID of the target merchant account for this Payin Request.
                   type: string
@@ -697,7 +697,6 @@ paths:
             schema:
               oneOf:
                 - $ref: "#/components/schemas/PayoutTargetBankAccount"
-                - $ref: "#/components/schemas/PayoutTargetTransfiya"
       responses:
         "200":
           description: Payout Target created successfully
@@ -866,7 +865,7 @@ paths:
                   description: Payout Target to send money to.
                 amount:
                   type: number
-                  description: Amount to be sent in COP. Must be greater than $1000.
+                  description: Amount to be sent in COP. Must be greater than $1.000. The maxiumum is configured per merchant but defaults to $5.000.000. Contact us if you need to increase this limit.
                 sourceMerchantAccountId:
                   description: An optional account ID of the source merchant account for this Payout Request.
                   type: string
@@ -1229,7 +1228,7 @@ components:
           description: URL to which the customer will be redirected after the payment process.
         amount:
           type: number
-          description: Amount to be paid in COP. Must be greater than $1000.
+          description: Amount to be paid in COP. Must be greater than $1.000. The maxiumum is configured per merchant but defaults to $2.000.000. Contact us if you need to increase this limit.
         type:
           type: string
           enum:
@@ -1338,7 +1337,7 @@ components:
           description: URL to which the customer will be redirected after the payment process.
         amount:
           type: number
-          description: Amount to be paid in COP. Must be greater than $1000.
+          description: Amount to be paid in COP. Must be greater than $1000. The maxiumum is configured per merchant but defaults to $2.000.000. Contact us if you need to increase this limit.
         type:
           type: string
           enum:
@@ -1373,7 +1372,7 @@ components:
           description: URL to which the customer will be redirected after the payment process.
         amount:
           type: number
-          description: Amount to be paid in COP. Must be greater than $1000.
+          description: Amount to be paid in COP. Must be greater than $1000. The maxiumum is configured per merchant but defaults to $2.000.000. Contact us if you need to increase this limit.
         type:
           type: string
           enum:
@@ -1411,7 +1410,7 @@ components:
           description: URL to which the customer will be redirected after the payment process.
         amount:
           type: number
-          description: Amount to be paid in COP. Must be greater than $1000.
+          description: Amount to be paid in COP. Must be greater than $1000. The maxiumum is configured per merchant but defaults to $2.000.000. Contact us if you need to increase this limit.
         type:
           type: string
           enum:
@@ -1721,7 +1720,6 @@ components:
         status:
           type: string
           enum:
-            - pending
             - active
             - cancelled
           description: Status of the Payout Target.
@@ -1738,7 +1736,6 @@ components:
           type: string
           enum:
             - bankAccount
-            - transfiya
           description: Type of Payout Target created.
         createdAt:
           type: string
@@ -1760,7 +1757,7 @@ components:
         type:
           type: string
           description: Type of Payout Target created.
-          enum: [bankAccount, transfiya]
+          enum: [bankAccount]
     PayoutRequest:
       type: object
       properties:
@@ -1822,7 +1819,6 @@ components:
       description: Additional detail on the status. Only present when status is "cancelled".
       enum:
         - AUTHENTICATION_FAILED
-        - BANK_NOT_AVAILABLE
         - CUSTOMER_CANCELLATION
         - DECLINED_BY_BANK
         - EXPIRED

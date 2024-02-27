@@ -1,0 +1,10 @@
+---
+title: Status
+---
+
+| Status       | Description                                                                                                                |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------- |
+| `pending`    | The Payin Link is created. You need to redirect the user to the `paymentUrl` for Palomma to collect payment info.          |
+| `processing` | The request has been sent to the bank, and Palomma is waiting for a response.                                              |
+| `approved`   | The payment has been successful.                                                                                           |
+| `cancelled`  | Error state. More detail available in `statusMessage` field. See all [Status Messages](/api-documentation/statusMessages). |

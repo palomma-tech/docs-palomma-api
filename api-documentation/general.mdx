@@ -18,6 +18,8 @@ Sandbox
 https://sandbox.api.palomma.com/v0
 ```
 
+<Note>The sandbox environment will be erased periodically.</Note>
+
 ## Authentication
 
 You should have received an API key from the onboarding process. Every request to the Palomma API should include an Authentication header.
@@ -25,3 +27,16 @@ You should have received an API key from the onboarding process. Every request t
 ```jsx
 Authentication: `Bearer ${apiKey}`;
 ```
+
+## Limits
+
+The default maximum limit per transaction for payins is `$2.000.000 COP`. For payouts it is `$5.000.000 COP`.
+
+<Tip>
+  Contact us if you need higher limits. We are happy to accomodate your business
+  needs.
+</Tip>
+
+## Settlement Times
+
+Once a payin operation is approved, the funds will become available to you the next business day.

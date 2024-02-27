@@ -1,0 +1,10 @@
+---
+title: Status
+---
+
+| Status       | Description                                                                                                                |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------- |
+| `pending`    | The Payin Source is created. You need to redirect the user to the `authUrl` for Palomma to collect the account info.       |
+| `processing` | A request has been sent to the bank to verify the account.                                                                 |
+| `active`     | The payment source can be used to create a `Payin Request`.                                                                |
+| `cancelled`  | Error state. More detail available in `statusMessage` field. See all [Status Messages](/api-documentation/statusMessages). |

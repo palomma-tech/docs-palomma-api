@@ -69,6 +69,7 @@
               "group": "Payin Links",
               "pages": [
                 "api-documentation/payinLinks/object",
+                "api-documentation/payinLinks/status",
                 "api-documentation/payinLinks/create",
                 "api-documentation/payinLinks/list",
                 "api-documentation/payinLinks/get"
@@ -78,6 +79,7 @@
               "group": "Payin Sources",
               "pages": [
                 "api-documentation/payinSources/object",
+                "api-documentation/payinSources/status",
                 "api-documentation/payinSources/create",
                 "api-documentation/payinSources/list",
                 "api-documentation/payinSources/get"
@@ -87,6 +89,7 @@
               "group": "Payin Requests",
               "pages": [
                 "api-documentation/payinRequests/object",
+                "api-documentation/payinRequests/status",
                 "api-documentation/payinRequests/create",
                 "api-documentation/payinRequests/list",
                 "api-documentation/payinRequests/get"
@@ -96,6 +99,7 @@
               "group": "Payout Targets",
               "pages": [
                 "api-documentation/payoutTargets/object",
+                "api-documentation/payoutTargets/status",
                 "api-documentation/payoutTargets/create",
                 "api-documentation/payoutTargets/list",
                 "api-documentation/payoutTargets/get"
@@ -105,6 +109,7 @@
               "group": "Payout Requests",
               "pages": [
                 "api-documentation/payoutRequests/object",
+                "api-documentation/payoutRequests/status",
                 "api-documentation/payoutRequests/create",
                 "api-documentation/payoutRequests/list",
                 "api-documentation/payoutRequests/get"
@@ -113,7 +118,7 @@
           ]
         },
         "api-documentation/advanced",
-        "api-documentation/errors"
+        "api-documentation/statusMessages"
       ]
     },
     {
