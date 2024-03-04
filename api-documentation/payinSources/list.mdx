@@ -2,3 +2,47 @@
 title: "Get All Payin Sources"
 openapi: "GET /payinSources"
 ---
+
+<Tip>
+  This endpoint is paginated to improve its performance. The example below shows
+  how to fetch multiple pages.
+</Tip>
+
+```typescript
+import axios from "axios";
+
+const getPage = async (input: { limit?: number; cursor?: string }) => {
+  const response = await axios.get(
+    "https://prod.api.palomma.com/v0/payinSources",
+    {
+      headers: {
+        Authorization: "Bearer <token>",
+      },
+      params: {
+        ...input,
+      },
+    }
+  );
+  if (!response.data) throw new Error();
+  const { items, cursor, count } = response.data;
+  return { items, cursor, count };
+};
+
+const getAll = async (input: { limit?: number }) => {
+  let items: any[] = [];
+  const firstPage = await getPage({ limit: input.limit });
+  if (firstPage) {
+    items = items.concat(firstPage.items);
+    let currentCursor = firstPage.cursor;
+    while (currentCursor !== null) {
+      const nextPage = await getPage({
+        limit: input.limit,
+        cursor: currentCursor,
+      });
+      items = items.concat(nextPage.items);
+      currentCursor = nextPage.cursor;
+    }
+  }
+  return items;
+};
+```
