@@ -205,6 +205,7 @@ paths:
           application/json:
             schema:
               oneOf:
+                - $ref: "#/components/schemas/PayinLinkGeneral"
                 - $ref: "#/components/schemas/PayinLinkPSE"
                 - $ref: "#/components/schemas/PayinLinkBancolombiaButton"
                 - $ref: "#/components/schemas/PayinLinkNequiButton"
@@ -1314,6 +1315,51 @@ components:
           type: string
           format: date-time
           description: ISO string representing when the Payin Link was last updated.
+    PayinLinkGeneral:
+      title: General
+      type: object
+      required:
+        - customerId
+        - redirectUrl
+        - amount
+        - type
+        - availableTypes
+      properties:
+        reference:
+          type: string
+          description: An optional reference provided by the merchant to identify the Payin Link.
+        description:
+          type: string
+          description: An optional description of the Payin Link.
+        customerId:
+          type: string
+          description: The ID of the customer for whom the Payin Link is created.
+        redirectUrl:
+          type: string
+          description: URL to which the customer will be redirected after the payment process.
+        amount:
+          type: number
+          description: Amount to be paid in COP. Must be greater than $1000. The maxiumum is configured per merchant but defaults to $2.000.000. Contact us if you need to increase this limit.
+        type:
+          type: string
+          enum:
+            - general
+        availableTypes:
+          type: array
+          description: The payment methods types that are available for the customer to select.
+          items:
+            type: string
+            enum:
+              - pse
+              - bancolombiaButton
+              - nequiButton
+              - card
+        expiration:
+          type: string
+          description: Date when link will expire in YYYY-MM-DD format. By default, expiration is on the day after the link creation. Minimum expiration is the current date and maximum expiration is 7 days from creation. Links expire shortly after the day on the expiration date ends.
+        targetMerchantAccountId:
+          type: string
+          description: An optional account ID of the target merchant account for this Payin Link.
     PayinLinkBancolombiaButton:
       title: Bancolombia Button
       type: object
