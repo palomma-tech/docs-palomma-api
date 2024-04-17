@@ -92,6 +92,11 @@ paths:
       tags:
         - customers
       parameters:
+        - name: reference
+          in: query
+          description: Filter by reference provided on creation.
+          schema:
+            type: string
         - name: limit
           in: query
           description: Number of records to return. Default is 20. Maximum is 100.
@@ -249,11 +254,21 @@ paths:
                     type: string
                     description: Description of the internal server error.
     get:
-      summary: Retrieve payin link
+      summary: Retrieve payin links
       operationId: listPayinLinks
       tags:
         - Payin Links
       parameters:
+        - name: reference
+          in: query
+          description: Filter by reference provided on creation.
+          schema:
+            type: string
+        - name: customerId
+          in: query
+          description: Filter by customerId.
+          schema:
+            type: string
         - name: limit
           in: query
           description: Number of records to return. Default is 20. Maximum is 100.
@@ -408,11 +423,21 @@ paths:
                     type: string
                     description: Description of the internal server error.
     get:
-      summary: Retrieve payin source
+      summary: Retrieve payin sources
       operationId: listPayinSources
       tags:
         - Payin Sources
       parameters:
+        - name: reference
+          in: query
+          description: Filter by reference provided on creation.
+          schema:
+            type: string
+        - name: customerId
+          in: query
+          description: Filter by customerId.
+          schema:
+            type: string
         - name: limit
           in: query
           description: Number of records to return. Default is 20. Maximum is 100.
@@ -585,6 +610,21 @@ paths:
       tags:
         - Payin Requests
       parameters:
+        - name: reference
+          in: query
+          description: Filter by reference provided on creation.
+          schema:
+            type: string
+        - name: customerId
+          in: query
+          description: Filter by customerId.
+          schema:
+            type: string
+        - name: payinSourceId
+          in: query
+          description: Filter by payinSourceId.
+          schema:
+            type: string
         - name: limit
           in: query
           description: Number of records to return. Default is 20. Maximum is 100.
@@ -742,6 +782,16 @@ paths:
       tags:
         - Payout Targets
       parameters:
+        - name: reference
+          in: query
+          description: Filter by reference provided on creation.
+          schema:
+            type: string
+        - name: customerId
+          in: query
+          description: Filter by customerId.
+          schema:
+            type: string
         - name: limit
           in: query
           description: Number of records to return. Default is 20. Maximum is 100.
@@ -914,6 +964,21 @@ paths:
       tags:
         - Payout Requests
       parameters:
+        - name: reference
+          in: query
+          description: Filter by reference provided on creation.
+          schema:
+            type: string
+        - name: customerId
+          in: query
+          description: Filter by customerId.
+          schema:
+            type: string
+        - name: payoutTargetId
+          in: query
+          description: Filter by payoutTargetId.
+          schema:
+            type: string
         - name: limit
           in: query
           description: Number of records to return. Default is 20. Maximum is 100.
