@@ -1653,10 +1653,7 @@ components:
           $ref: "#/components/schemas/BankAccount"
         partialPayinsEnabled:
           type: boolean
-          description: Only available for Bancolombia. Partial debit will be made if the account does not have sufficient funds to debit the total amount.
-        authRequired:
-          type: boolean
-          description: Determines whether the bank account must be verified before debits are made.
+          description: Only available for Bancolombia. Partial debit will be made if the account does not have sufficient funds to debit the total amount. By default, no partial debits will be made.
     PayinSource:
       type: object
       properties:
@@ -1689,7 +1686,7 @@ components:
           description: URL where the customer will be redirected after auth flow.
         partialPayinsEnabled:
           type: boolean
-          description: Indicates whether partial payins are enabled.
+          description: Only available for Bancolombia. Partial debit will be made if the account does not have sufficient funds to debit the total amount. By default, no partial debits will be made.
         type:
           type: string
           description: Type of Payin Source created.
@@ -1713,7 +1710,7 @@ components:
           description: An extra metadata field that can be included for visibility.
         partialPayinsEnabled:
           type: boolean
-          description: Indicates whether partial payins are enabled.
+          description: Only available for Bancolombia. Partial debit will be made if the account does not have sufficient funds to debit the total amount. By default, no partial debits will be made.
         type:
           type: string
           description: Type of Payin Source created.
