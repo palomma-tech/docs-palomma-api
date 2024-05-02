@@ -1166,7 +1166,52 @@ components:
         - nequi
         - rappipay
         - scotiabankcolpatria
-    BankAccountBank:
+    BcolDirectDebitBank:
+      type: string
+      description: The list of banks supported by the Palomma API.
+      enum:
+        - santander
+        - coofinep
+        - avvillas
+        - cotrafa
+        - confiar
+        - union
+        - rappipay
+        - nequi
+        - bancoagrario
+        - bancoomeva
+        - bancamia
+        - coopcentral
+        - citibank
+        - bancodeoccidente
+        - falabella
+        - bancodebogota
+        - bancocajasocial
+        - serfinanza
+        - cfa
+        - coltefinanciera
+        - pichincha
+        - iris
+        - ban100
+        - bancopopular
+        - daviplata
+        - bancolombia
+        - finandina
+        - scotiabankcolpatria
+        - gnbsudameris
+        - itau
+        - bbva
+        - davivienda
+        - mibanco
+        - multibank
+        - mundomujer
+        - procreditcolombia
+        - bancow
+        - bancoldex
+        - juriscoop
+        - itauhelm
+        - jpmorgancolombia
+    BcolPayoutBank:
       type: string
       description: The list of banks supported by the Palomma API.
       enum:
@@ -1650,7 +1695,7 @@ components:
             - bankAccount
         bankAccount:
           type: object
-          $ref: "#/components/schemas/BankAccount"
+          $ref: "#/components/schemas/BcolDirectDebitBankAccount"
         partialPayinsEnabled:
           type: boolean
           description: Only available for Bancolombia. Partial debit will be made if the account does not have sufficient funds to debit the total amount. By default, no partial debits will be made.
@@ -1715,11 +1760,25 @@ components:
           type: string
           description: Type of Payin Source created.
           enum: [bankAccount, bancolombiaToken, nequiToken]
-    BankAccount:
+    BcolDirectDebitBankAccount:
       type: object
       properties:
         bank:
-          $ref: "#/components/schemas/BankAccountBank"
+          $ref: "#/components/schemas/BcolDirectDebitBank"
+        accountType:
+          type: string
+          description: The type of the bank account.
+          enum:
+            - savings
+            - checking
+        accountNumber:
+          type: string
+          description: The bank account number.
+    BcolPayoutBankAccount:
+      type: object
+      properties:
+        bank:
+          $ref: "#/components/schemas/BcolPayoutBank"
         accountType:
           type: string
           description: The type of the bank account.
@@ -1813,7 +1872,7 @@ components:
           enum:
             - bankAccount
         bankAccount:
-          $ref: "#/components/schemas/BankAccount"
+          $ref: "#/components/schemas/BcolPayoutBankAccount"
     PayoutTargetTransfiya:
       title: Transfiya
       type: object
