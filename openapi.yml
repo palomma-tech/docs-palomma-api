@@ -1166,6 +1166,8 @@ components:
         - nequi
         - rappipay
         - scotiabankcolpatria
+        - uala
+        - crezcamos
     BcolDirectDebitBank:
       type: string
       description: The list of banks supported by the Palomma API.
@@ -1173,30 +1175,19 @@ components:
         - santander
         - coofinep
         - avvillas
-        - cotrafa
-        - confiar
-        - union
         - rappipay
         - nequi
         - bancoagrario
         - bancoomeva
-        - bancamia
         - coopcentral
         - citibank
         - bancodeoccidente
-        - falabella
         - bancodebogota
         - bancocajasocial
         - serfinanza
-        - cfa
-        - coltefinanciera
-        - pichincha
-        - iris
-        - ban100
         - bancopopular
         - daviplata
         - bancolombia
-        - finandina
         - scotiabankcolpatria
         - gnbsudameris
         - itau
@@ -1205,12 +1196,10 @@ components:
         - mibanco
         - multibank
         - mundomujer
-        - procreditcolombia
-        - bancow
-        - bancoldex
         - juriscoop
         - itauhelm
         - jpmorgancolombia
+        - btgpactual
     BcolPayoutBank:
       type: string
       description: The list of banks supported by the Palomma API.
@@ -1258,6 +1247,17 @@ components:
         - juriscoop
         - itauhelm
         - jpmorgancolombia
+        - asopagos
+        - pibank
+        - jfk
+        - ding
+        - uala
+        - btgpactual
+        - powwi
+        - bold
+        - coink
+        - santanderconsumer
+        - global66
     CustomerDetails:
       type: object
       properties:
