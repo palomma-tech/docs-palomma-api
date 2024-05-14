@@ -1407,6 +1407,7 @@ components:
           type: string
           description: The type of Payin Link
           enum:
+            - general
             - pse
             - bancolombiaButton
             - nequiButton
