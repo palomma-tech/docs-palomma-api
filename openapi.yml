@@ -1168,6 +1168,7 @@ components:
         - scotiabankcolpatria
         - uala
         - crezcamos
+        - nu
     BcolDirectDebitBank:
       type: string
       description: The list of banks supported by the Palomma API.
