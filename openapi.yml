@@ -1259,6 +1259,7 @@ components:
         - coink
         - santanderconsumer
         - global66
+        - nu
     CustomerDetails:
       type: object
       properties:
