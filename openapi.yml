@@ -1351,7 +1351,7 @@ components:
           $ref: "#/components/schemas/PseBank"
         expiration:
           type: string
-          description: Date when link will expire in YYYY-MM-DD format. By default, expiration is on the day after the link creation. Minimum expiration is the current date and maximum expiration is 7 days from creation. Links expire shortly after the day on the expiration date ends.
+          description: Datetime when link will expire in YYYY-MM-DDTHH:mm:ss format. By default, expiration is at the end of the day after the link creation. Minimum expiration is the current date and maximum expiration is at the end of the 7th day from creation. Links expire shortly after the specified datetime has passed.
         targetMerchantAccountId:
           type: string
           description: An optional account ID of the target merchant account for this Payin Link.
@@ -1417,7 +1417,7 @@ components:
             - bancolombiaCollect
         expiration:
           type: string
-          description: Date when link will expire in YYYY-MM-DD format. By default, expiration is on the day after the link creation. Minimum expiration is the current date and maximum expiration is 7 days from creation. Links expire shortly after the day on the expiration date ends.
+          description: Datetime when link will expire in YYYY-MM-DDTHH:mm:ss format. By default, expiration is at the end of the day after the link creation. Minimum expiration is the current date and maximum expiration is at the end of the 7th day from creation. Links expire shortly after the specified datetime has passed.
         targetMerchantAccountId:
           type: string
           description: Account ID of the target merchant account for this Payin Link.
@@ -1472,7 +1472,7 @@ components:
               - bancolombiaCollect
         expiration:
           type: string
-          description: Date when link will expire in YYYY-MM-DD format. By default, expiration is on the day after the link creation. Minimum expiration is the current date and maximum expiration is 7 days from creation. Links expire shortly after the day on the expiration date ends.
+          description: Datetime when link will expire in YYYY-MM-DDTHH:mm:ss format. By default, expiration is at the end of the day after the link creation. Minimum expiration is the current date and maximum expiration is at the end of the 7th day from creation. Links expire shortly after the specified datetime has passed.
         targetMerchantAccountId:
           type: string
           description: An optional account ID of the target merchant account for this Payin Link.
@@ -1506,7 +1506,7 @@ components:
             - bancolombiaCollect
         expiration:
           type: string
-          description: Date when link will expire in YYYY-MM-DD format. By default, expiration is on the day after the link creation. Minimum expiration is the current date and maximum expiration is 7 days from creation. Links expire shortly after the day on the expiration date ends.
+          description: Datetime when link will expire in YYYY-MM-DDTHH:mm:ss format. By default, expiration is at the end of the day after the link creation. Minimum expiration is the current date and maximum expiration is at the end of the 7th day from creation. Links expire shortly after the specified datetime has passed.
         targetMerchantAccountId:
           type: string
           description: An optional account ID of the target merchant account for this Payin Link.
@@ -1540,7 +1540,7 @@ components:
             - bancolombiaButton
         expiration:
           type: string
-          description: Date when link will expire in YYYY-MM-DD format. By default, expiration is on the day after the link creation. Minimum expiration is the current date and maximum expiration is 7 days from creation. Links expire shortly after the day on the expiration date ends.
+          description: Datetime when link will expire in YYYY-MM-DDTHH:mm:ss format. By default, expiration is at the end of the day after the link creation. Minimum expiration is the current date and maximum expiration is at the end of the 7th day from creation. Links expire shortly after the specified datetime has passed.
         targetMerchantAccountId:
           type: string
           description: An optional account ID of the target merchant account for this Payin Link.
@@ -1578,7 +1578,7 @@ components:
           description: The phone number of the customer, required for Nequi payments.
         expiration:
           type: string
-          description: Date when link will expire in YYYY-MM-DD format. By default, expiration is on the day after the link creation. Minimum expiration is the current date and maximum expiration is 7 days from creation. Links expire shortly after the day on the expiration date ends.
+          description: Datetime when link will expire in YYYY-MM-DDTHH:mm:ss format. By default, expiration is at the end of the day after the link creation. Minimum expiration is the current date and maximum expiration is at the end of the 7th day from creation. Links expire shortly after the specified datetime has passed.
         targetMerchantAccountId:
           type: string
           description: An optional account ID of the target merchant account for this Payin Link.
@@ -1615,7 +1615,7 @@ components:
           $ref: "#/components/schemas/Card"
         expiration:
           type: string
-          description: Date when link will expire in YYYY-MM-DD format. By default, expiration is on the day after the link creation. Minimum expiration is the current date and maximum expiration is 7 days from creation. Links expire shortly after the day on the expiration date ends.
+          description: Datetime when link will expire in YYYY-MM-DDTHH:mm:ss format. By default, expiration is at the end of the day after the link creation. Minimum expiration is the current date and maximum expiration is at the end of the 7th day from creation. Links expire shortly after the specified datetime has passed.
         targetMerchantAccountId:
           type: string
           description: An optional account ID of the target merchant account for this Payin Link.
