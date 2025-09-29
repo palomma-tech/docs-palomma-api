@@ -1080,6 +1080,234 @@ paths:
                 properties:
                   message:
                     type: string
+  /merchantAccounts:
+    get:
+      summary: Retrieve merchant accounts
+      operationId: listMerchantAccounts
+      tags:
+        - Merchant Accounts
+      parameters:
+        - name: limit
+          in: query
+          description: Number of records to return. Default is 20. Maximum is 100.
+          schema:
+            type: integer
+        - name: cursor
+          in: query
+          description: A cursor for use in pagination. The cursor indicates where to start fetching the results.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of merchant accounts successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/MerchantAccount"
+                  cursor:
+                    $ref: "#/components/schemas/CursorResponse"
+                  count:
+                    type: integer
+                    description: The total number of items returned.
+        "401":
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /merchantAccounts/{merchantAccountId}:
+    get:
+      summary: Retrieve a Merchant Account
+      operationId: getMerchantAccountById
+      tags:
+        - Merchant Accounts
+      parameters:
+        - name: merchantAccountId
+          in: path
+          required: true
+          description: Unique identifier of the merchant account.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Merchant Account retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MerchantAccount"
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        "401":
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        "404":
+          description: Merchant Account not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /merchantAccounts/{merchantAccountId}/payinSettlements:
+    get:
+      summary: Retrieve payin settlements
+      operationId: listPayinSettlements
+      tags:
+        - Payin Settlements
+      parameters:
+        - name: merchantAccountId
+          in: path
+          required: true
+          description: Unique identifier of the merchant account.
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Number of records to return. Default is 20. Maximum is 100.
+          schema:
+            type: integer
+        - name: cursor
+          in: query
+          description: A cursor for use in pagination. The cursor indicates where to start fetching the results.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of payin settlements successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/PayinSettlement"
+                  cursor:
+                    $ref: "#/components/schemas/CursorResponse"
+                  count:
+                    type: integer
+                    description: The total number of items returned.
+        "401":
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /merchantAccounts/{merchantAccountId}/payinSettlements/{payinSettlementId}:
+    get:
+      summary: Retrieve a Payin Settlement
+      operationId: getPayoutRequestById
+      tags:
+        - Payin Settlements
+      parameters:
+        - name: merchantAccountId
+          in: path
+          required: true
+          description: Unique identifier of the merchant account.
+          schema:
+            type: string
+        - name: payinSettlementId
+          in: path
+          required: true
+          description: Unique identifier of the payin settlement.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Payin Settlement retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PayinSettlement"
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        "401":
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        "404":
+          description: Payout Request not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
 
 components:
   schemas:
@@ -2021,6 +2249,79 @@ components:
           type: string
           format: date-time
           description: ISO string indicating when the Payout Request was last updated.
+    MerchantAccount:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for this Merchant Account.
+          example: 01HPR8QBF5QKA313RPBSKYB7DS
+        description:
+          type: string
+          description: Text configured on creation to identify the Merchant Account.
+        unsettledAmount:
+          type: number
+          description: Amount of money in the Merchant Account that is not yet settled.
+          example: 500000
+        payoutLimitBalance:
+          type: number
+          description: Remaining balance for which payouts can be made. This balance is set optionally to restrict the amount of money that can be paid out from the Merchant Account. It can be replenished by contacting us.
+          example: 200000
+        type:
+          type: string
+          enum:
+            - aggregator
+            - gateway
+          description: Type of the Merchant Account. Merchant Accounts are either aggregator or gateway. Aggregator accounts maintain a balance in Palomma which can be used to make payout requests while gateway accounts automatically withdraw funds on creation of Payin Settlements recurringly.
+        availableBalance:
+          type: number
+          description: Amount of money in the Aggregator Merchant Account that has been settled and is available for payout. Not applicable for Gateway Merchant Accounts.
+          example: 1000000
+        payinsEnabled:
+          type: boolean
+          description: Whether payins are enabled for Gateway Merchant Account. Only applicable for Gateway Merchant Accounts, as aggregator accounts are always able to receive payins.
+        payoutsEnabled:
+          type: boolean
+          description: Whether payouts are enabled for Gateway Merchant Account. Only applicable for Gateway Merchant Accounts, as aggregator accounts are always able to make payouts.
+    PayinSettlement:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for this Payin Settlement.
+          example: 01HPR57X6QR5ZRKEEKBSDBW4RA
+        merchantAccountId:
+          type: string
+          description: Reference to Merchant Account to which the Payin Settlement belongs.
+          example: 01HPR8S7YF43PV3QV16TZDC80P
+        totalAmountCollected:
+          type: number
+          description: Total amount collected by payins included in the Payin Settlement.
+          example: 100000
+        totalFees:
+          type: number
+          description: Total fees associated to payins included in the Payin Settlement.
+          example: 500
+        numberOfPayins:
+          type: number
+          description: Total number of payins included in the Payin Settlement.
+          example: 5
+        payinSettlementDate:
+          type: string
+          description: Date of the Payin Settlement.
+          example: "2024-08-28"
+        payinSettlementCycle:
+          type: number
+          description: "Cycle of the Payin Settlement. It can be one of the five cycles of the day: 11, 13, 16, 18, 20, corresponding to the hour in the day when the payin settlement was created."
+          example: 11
+        createdAt:
+          type: string
+          format: date-time
+          description: ISO string indicating when the Payin Settlement was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: ISO string indicating when the Payin Settlement was last updated.
     StatusMessage:
       type: string
       description: Additional detail on the status. Only present when status is "cancelled".

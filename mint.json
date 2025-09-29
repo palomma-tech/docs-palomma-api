@@ -110,6 +110,22 @@
                 "api-documentation/payoutRequests/list",
                 "api-documentation/payoutRequests/get"
               ]
+            },
+            {
+              "group": "Merchant Accounts",
+              "pages": [
+                "api-documentation/merchantAccounts/object",
+                "api-documentation/merchantAccounts/list",
+                "api-documentation/merchantAccounts/get"
+              ]
+            },
+            {
+              "group": "Payin Settlements",
+              "pages": [
+                "api-documentation/payinSettlements/object",
+                "api-documentation/payinSettlements/list",
+                "api-documentation/payinSettlements/get"
+              ]
             }
           ]
         },
