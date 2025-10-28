@@ -625,6 +625,11 @@ paths:
           description: Filter by payinSourceId.
           schema:
             type: string
+        - name: payinSettlementId
+          in: query
+          description: Filter by payinSettlementId.
+          schema:
+            type: string
         - name: limit
           in: query
           description: Number of records to return. Default is 20. Maximum is 100.
