@@ -1198,7 +1198,7 @@ paths:
                 properties:
                   message:
                     type: string
-  /merchantAccounts/{merchantAccountId}/payinSettlements:
+  /merchantAccounts/{merchantAccountId}/settlements:
     get:
       summary: Retrieve payin settlements
       operationId: listPayinSettlements
@@ -1256,7 +1256,7 @@ paths:
                 properties:
                   message:
                     type: string
-  /merchantAccounts/{merchantAccountId}/payinSettlements/{payinSettlementId}:
+  /merchantAccounts/{merchantAccountId}/settlements/{payinSettlementId}:
     get:
       summary: Retrieve a Payin Settlement
       operationId: getPayoutRequestById
