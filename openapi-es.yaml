@@ -1,0 +1,484 @@
+openapi: 3.0.3
+info:
+  title: Palomma Rentals API
+  version: 1.0.0
+  description: API para crear y gestionar facturas de arriendo y liquidaciones.
+  contact:
+    name: Palomma
+servers:
+  - url: https://api.palomma.com
+    description: Produccion
+  - url: https://sandbox.api.palomma.com
+    description: Sandbox
+security:
+  - bearerAuth: []
+tags:
+  - name: Facturas
+    description: Crear, obtener y listar facturas.
+  - name: Liquidaciones
+    description: Obtener liquidaciones por fecha y ciclo.
+
+paths:
+  /invoices:
+    post:
+      tags: [Facturas]
+      summary: Crear factura
+      operationId: createInvoice
+      description: Crea una nueva factura para el comercio autenticado.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateInvoiceRequest"
+            examples:
+              createInvoice:
+                summary: Payload minimo valido
+                value:
+                  reference: "INV-2026-0001"
+                  amount: 1850000
+                  description: "Canon de arrendamiento marzo 2026"
+                  redirectUrl: "https://merchant.example.com/payments/return"
+                  customerDocumentNumber: "900123456"
+      responses:
+        "200":
+          description: Factura creada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+              examples:
+                created:
+                  value:
+                    id: "01HQY8EW1H9YGH5PAV5Y2M9R3T"
+                    reference: "INV-2026-0001"
+                    status: "ready"
+                    amount: 1850000
+                    description: "Canon de arrendamiento marzo 2026"
+                    contract: "00000"
+                    expirationDate: "2026-03-11T16:37:14.007Z"
+                    customerDocumentNumber: "900123456"
+                    customerName: "Inmobiliaria Ejemplo SAS"
+                    createdAt: "2026-03-11T16:32:14.007Z"
+                    paymentUrl: "https://pagos.palomma.com/pay/merchant_123/01HQY8EW1H9YGH5PAV5Y2M9R3T"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+    get:
+      tags: [Facturas]
+      summary: Listar facturas
+      operationId: listInvoices
+      description: Retorna una lista paginada de facturas para el comercio autenticado.
+      parameters:
+        - in: query
+          name: reference
+          description: Filtrar por referencia de factura.
+          schema:
+            type: string
+          example: "INV-2026-0001"
+        - in: query
+          name: customerDocumentNumber
+          description: Filtrar por numero de documento del cliente.
+          schema:
+            type: string
+          example: "900123456"
+        - in: query
+          name: contract
+          description: Filtrar por identificador de contrato.
+          schema:
+            type: string
+          example: "CTR-8842"
+        - in: query
+          name: paymentDate
+          description: Filtrar por fecha exacta de pago.
+          schema:
+            type: string
+            format: date
+          example: "2026-03-11"
+        - in: query
+          name: settlementDate
+          description: Filtrar por fecha de liquidacion.
+          schema:
+            type: string
+            format: date
+          example: "2026-03-12"
+        - in: query
+          name: settlementCycle
+          description: Filtrar por ciclo de liquidacion.
+          schema:
+            type: string
+          example: "1"
+        - in: query
+          name: limit
+          description: Cantidad de resultados por pagina. Min 1, max 100.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+          example: 20
+        - in: query
+          name: cursor
+          description: Cursor opaco de una respuesta anterior para obtener la siguiente pagina.
+          schema:
+            type: string
+          example: "eyJwayI6InJlbnRhbHMj..."
+      responses:
+        "200":
+          description: Lista paginada de facturas
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListInvoicesResponse"
+              examples:
+                page:
+                  value:
+                    items:
+                      - id: "01HQY8EW1H9YGH5PAV5Y2M9R3T"
+                        reference: "INV-2026-0001"
+                        status: "paid"
+                        amount: 1850000
+                        description: "Canon de arrendamiento marzo 2026"
+                        contract: "CTR-8842"
+                        customerDocumentNumber: "900123456"
+                        createdAt: "2026-03-11T16:32:14.007Z"
+                        paymentDate: "2026-03-11T18:01:03.219Z"
+                        paymentMethod: "pse"
+                        paymentSource: "link"
+                        paymentAmount: 1850000
+                        settlementDate: "2026-03-12"
+                        settlementTime: "1"
+                        paymentId: "payin_8JkM2P"
+                        paymentUrl: "https://pagos.palomma.com/pay/merchant_123/01HQY8EW1H9YGH5PAV5Y2M9R3T"
+                    cursor: "eyJwayI6InJlbnRhbHMj..."
+                    count: 1
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /invoices/{id}:
+    get:
+      tags: [Facturas]
+      summary: Obtener factura por id
+      operationId: getInvoice
+      description: Obtiene una factura por su id.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Id de la factura.
+          schema:
+            type: string
+          example: "01HQY8EW1H9YGH5PAV5Y2M9R3T"
+      responses:
+        "200":
+          description: Factura encontrada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /settlements/{date}/{cycle}:
+    get:
+      tags: [Liquidaciones]
+      summary: Obtener liquidacion por fecha y ciclo
+      operationId: getSettlement
+      description: Obtiene una liquidacion por fecha y ciclo.
+      parameters:
+        - in: path
+          name: date
+          required: true
+          description: Fecha de liquidacion en formato `YYYY-MM-DD`.
+          schema:
+            type: string
+            format: date
+          example: "2026-03-12"
+        - in: path
+          name: cycle
+          required: true
+          description: Identificador del ciclo de liquidacion.
+          schema:
+            type: string
+          example: "1"
+      responses:
+        "200":
+          description: Liquidacion encontrada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Settlement"
+              examples:
+                settlement:
+                  value:
+                    date: "2026-03-12"
+                    cycle: "1"
+                    status: "paid"
+                    numberOfInvoices: 24
+                    amountCollected: 45200000
+                    fees: 610000
+                    feesPostpaid: false
+                    adjustments: 0
+                    gateway: false
+                    paymentAmount: 44590000
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+      description: "Enviar header: `Authorization: Bearer <apiKey>`."
+
+  responses:
+    BadRequest:
+      description: Solicitud invalida
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          examples:
+            invalidBody:
+              value:
+                error: "Invalid JSON in request body"
+            schemaError:
+              value:
+                error: "Amount must be an integer"
+    Unauthorized:
+      description: Token invalido o ausente
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            error: "Invalid or missing token"
+    NotFound:
+      description: Recurso no encontrado
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          examples:
+            invoiceNotFound:
+              value:
+                error: "Invoice not found"
+            settlementNotFound:
+              value:
+                error: "Settlement not found"
+    InternalServerError:
+      description: Error interno del servidor
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            error: "Internal Server Error"
+
+  schemas:
+    ErrorResponse:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: string
+          description: Mensaje de error legible.
+
+    CreateInvoiceRequest:
+      type: object
+      required:
+        - reference
+        - amount
+        - description
+        - redirectUrl
+        - customerDocumentNumber
+      properties:
+        reference:
+          type: string
+          minLength: 1
+          description: Referencia unica de la factura para tus registros (ej. `"INV-2026-0001"`).
+        amount:
+          type: integer
+          minimum: 3000
+          maximum: 550000000
+          description: Monto de la factura en COP. Debe estar entre 3.000 y 550.000.000.
+        description:
+          type: string
+          minLength: 1
+          description: Descripcion de la factura mostrada al cliente.
+        redirectUrl:
+          type: string
+          format: uri
+          description: URL a la que se redirige al cliente despues de completar el flujo de pago.
+        customerDocumentNumber:
+          type: string
+          minLength: 1
+          description: Numero de documento o identificacion del cliente.
+        documentType:
+          type: string
+          description: "Tipo de documento del cliente. Uno de: `cc` (cédula), `ce` (cédula de extranjería), `nit` (NIT), `ti` (tarjeta de identidad), `ps` (pasaporte), `cif` (código de identificación fiscal), `ne` (NIT extranjero), `rc` (registro civil), `ppt` (permiso de permanencia temporal)."
+          enum: [cc, ce, nit, ti, ps, cif, ne, rc, ppt]
+        customerName:
+          type: string
+          description: Nombre del cliente (opcional).
+        contract:
+          type: string
+          description: Identificador del contrato. Por defecto `"00000"` si no se proporciona.
+          default: "00000"
+
+    Invoice:
+      type: object
+      required:
+        - id
+        - status
+        - amount
+        - description
+        - contract
+        - customerDocumentNumber
+        - createdAt
+        - paymentUrl
+      properties:
+        id:
+          type: string
+          description: Identificador unico de la factura.
+        reference:
+          type: string
+          description: Referencia de factura proporcionada por el comercio.
+        status:
+          type: string
+          description: "Estado de la factura: `pending` (creada, aun no procesada), `ready` (link de pago activo), `paid` (pagada), `cancelled` (cancelada) o `chargeback` (contracargo)."
+          enum: [pending, ready, paid, cancelled, chargeback]
+        amount:
+          type: number
+          description: Monto de la factura en COP.
+        description:
+          type: string
+          description: Descripcion de la factura.
+        contract:
+          type: string
+          description: Identificador del contrato.
+        expirationDate:
+          type: string
+          description: Fecha y hora de expiracion del link de pago (ISO 8601). Las facturas expiran 5 minutos despues de la creacion, por lo que se debe redirigir al cliente de inmediato. Una vez que la transaccion esta en progreso, no expira hasta que se complete.
+        customerDocumentNumber:
+          type: string
+          description: Numero de documento del cliente.
+        customerName:
+          type: string
+          description: Nombre del cliente.
+        createdAt:
+          type: string
+          description: Fecha y hora de creacion de la factura (ISO 8601).
+        paymentDate:
+          type: string
+          format: date-time
+          description: Fecha y hora en que se pago la factura. Presente en facturas pagadas y con contracargo.
+        paymentMethod:
+          type: string
+          enum: [pse, nequiButton, bancolombiaButton, breb, card]
+          description: Metodo de pago utilizado. Presente en facturas pagadas y con contracargo.
+        paymentSource:
+          type: string
+          enum: [whatsapp, portal, link]
+          description: Canal a traves del cual se realizo el pago. Presente en facturas pagadas y con contracargo.
+        paymentAmount:
+          type: number
+          description: Monto efectivamente pagado en COP. Presente en facturas pagadas y con contracargo.
+        settlementDate:
+          type: string
+          description: Fecha de liquidacion (`YYYY-MM-DD`). Presente una vez la factura esta liquidada.
+        settlementTime:
+          type: string
+          description: Identificador del ciclo de liquidacion. Presente una vez la factura esta liquidada.
+        paymentId:
+          type: string
+          description: Identificador del pago. Presente en facturas pagadas y con contracargo.
+
+        paymentUrl:
+          type: string
+          format: uri
+          description: URL de la pagina de pago de Palomma para esta factura.
+
+    ListInvoicesResponse:
+      type: object
+      required: [items, count]
+      properties:
+        items:
+          type: array
+          description: Facturas en la pagina actual.
+          items:
+            $ref: "#/components/schemas/Invoice"
+        cursor:
+          type: string
+          nullable: true
+          description: Cursor para la siguiente pagina. `null` cuando no hay mas paginas.
+        count:
+          type: integer
+          description: Cantidad de facturas retornadas en esta pagina.
+
+    Settlement:
+      type: object
+      required:
+        - date
+        - cycle
+        - status
+        - numberOfInvoices
+        - amountCollected
+        - fees
+        - feesPostpaid
+        - adjustments
+        - gateway
+        - paymentAmount
+      properties:
+        date:
+          type: string
+          description: Fecha de liquidacion (`YYYY-MM-DD`).
+        cycle:
+          type: string
+          description: Identificador del ciclo de liquidacion.
+        status:
+          type: string
+          enum: [processing, paid, credited, error]
+          description: "Estado de la liquidacion: `processing` (en proceso), `paid` (pagada), `credited` (acreditada) o `error`."
+        numberOfInvoices:
+          type: number
+          description: Cantidad total de facturas incluidas en esta liquidacion.
+        amountCollected:
+          type: number
+          description: Monto bruto recaudado en COP.
+        fees:
+          type: number
+          description: Total de comisiones descontadas en COP.
+        feesPostpaid:
+          type: boolean
+          description: Si las comisiones se cobran por separado (postpago) para esta liquidacion.
+        adjustments:
+          type: number
+          description: Ajustes aplicados al monto de la liquidacion en COP.
+        gateway:
+          type: boolean
+          description: Si esta es una liquidacion de tipo gateway.
+        paymentAmount:
+          type: number
+          description: Monto neto a pagar en COP.

@@ -1,0 +1,204 @@
+---
+title: Webhooks
+---
+
+Palomma envia eventos de webhook cuando ocurre algo importante. Registra una URL con el equipo de Palomma y enviaremos un HTTP POST con un cuerpo JSON cada vez que ocurra un evento.
+
+<Info>
+  Para habilitar webhooks, contacta al equipo de Palomma y proporcionanos la URL
+  donde deseas recibir los eventos.
+</Info>
+
+## Cuando notificamos
+
+Solo enviamos webhooks en **estado final**. Cada factura y liquidacion genera una unica notificacion. No recibiras multiples webhooks mientras un recurso pasa por estados intermedios.
+
+## Requisitos de respuesta
+
+Tu endpoint debe devolver HTTP **200** en menos de **5 segundos**. Si no recibimos respuesta a tiempo, la entrega se considera fallida y se reintentara. Recomendamos confirmar la recepcion inmediatamente y procesar el payload de forma asincrona.
+
+---
+
+## Estructura de la solicitud
+
+Cada webhook es una solicitud `POST` con un cuerpo JSON que contiene estos campos de nivel superior:
+
+<ResponseField name="webhookId" type="string">
+  Identificador unico de esta notificacion. El mismo `webhookId` se reutiliza en
+  los reintentos para que puedas deduplicar.
+</ResponseField>
+<ResponseField name="timestamp" type="string">
+  Timestamp ISO 8601 del momento en que se realizo este intento de entrega (se actualiza en cada reintento).
+</ResponseField>
+<ResponseField name="type" type="string">
+  Tipo de evento: `invoice` o `settlement`.
+</ResponseField>
+<ResponseField name="data" type="object">
+  Payload del evento. La estructura depende de `type` (ver abajo).
+</ResponseField>
+
+### Payloads de eventos
+
+<Tabs>
+<Tab title="Factura">
+
+Se envia cuando una factura alcanza su estado final (`type: "invoice"`).
+
+<ResponseField name="id" type="string">
+  Identificador unico de la factura.
+</ResponseField>
+<ResponseField name="reference" type="string">
+  Referencia de la factura proporcionada por el comercio.
+</ResponseField>
+<ResponseField name="status" type="string">
+  Uno de `pending`, `ready`, `paid`, `cancelled` o `chargeback`.
+</ResponseField>
+<ResponseField name="amount" type="number">
+  Monto de la factura en COP.
+</ResponseField>
+<ResponseField name="description" type="string">
+  Descripcion de la factura.
+</ResponseField>
+<ResponseField name="contract" type="string">
+  Identificador del contrato.
+</ResponseField>
+<ResponseField name="expirationDate" type="string">
+  Fecha y hora de expiracion del link de pago (ISO 8601).
+</ResponseField>
+<ResponseField name="customerDocumentNumber" type="string">
+  Numero de documento del cliente.
+</ResponseField>
+<ResponseField name="customerName" type="string">
+  Nombre del cliente.
+</ResponseField>
+<ResponseField name="createdAt" type="string">
+  Fecha y hora de creacion de la factura (ISO 8601).
+</ResponseField>
+<ResponseField name="paymentDate" type="string">
+  Cuando se pago la factura. Presente en facturas pagadas y con chargeback.
+</ResponseField>
+<ResponseField name="paymentMethod" type="string">
+  Metodo de pago utilizado. Presente en facturas pagadas y con chargeback.
+</ResponseField>
+<ResponseField name="paymentSource" type="string">
+  Uno de `whatsapp`, `portal` o `link`. Presente en facturas pagadas y con chargeback.
+</ResponseField>
+<ResponseField name="paymentAmount" type="number">
+  Monto realmente pagado en COP. Presente en facturas pagadas y con chargeback.
+</ResponseField>
+<ResponseField name="settlementDate" type="string">
+  Fecha de liquidacion. Presente una vez que la factura esta liquidada.
+</ResponseField>
+<ResponseField name="settlementTime" type="string">
+  Ciclo de liquidacion. Presente una vez que la factura esta liquidada.
+</ResponseField>
+<ResponseField name="paymentId" type="string">
+  Identificador del pago. Presente en facturas pagadas y con chargeback.
+</ResponseField>
+<ResponseField name="paymentUrl" type="string">
+  URL de la pagina de pago de Palomma para esta factura.
+</ResponseField>
+
+</Tab>
+<Tab title="Liquidacion">
+
+Se envia cuando una liquidacion alcanza su estado final (`type: "settlement"`).
+
+<ResponseField name="date" type="string">
+  Fecha de la liquidacion.
+</ResponseField>
+<ResponseField name="cycle" type="string">
+  Ciclo de la liquidacion.
+</ResponseField>
+<ResponseField name="status" type="string">
+  Uno de `processing`, `paid`, `credited` o `error`.
+</ResponseField>
+<ResponseField name="numberOfInvoices" type="number">
+  Numero de facturas en la liquidacion.
+</ResponseField>
+<ResponseField name="amountCollected" type="number">
+  Monto total recaudado (COP).
+</ResponseField>
+<ResponseField name="fees" type="number">
+  Comisiones aplicadas (COP).
+</ResponseField>
+<ResponseField name="feesPostpaid" type="boolean">
+  Si las comisiones son pospago.
+</ResponseField>
+<ResponseField name="adjustments" type="number">
+  Ajustes aplicados (COP).
+</ResponseField>
+<ResponseField name="gateway" type="boolean">
+  Si la liquidacion paso por el gateway.
+</ResponseField>
+<ResponseField name="paymentAmount" type="number">
+  Monto neto del pago (COP).
+</ResponseField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Verificacion de firmas
+
+Cada webhook incluye un header `X-Signature` para que puedas confirmar que la solicitud proviene de Palomma. La firma es un HMAC-SHA256 del cuerpo crudo de la solicitud, usando la `integrityKey` asignada a tu cuenta.
+
+<Warning>
+  Siempre verifica la firma antes de procesar el evento.
+</Warning>
+
+Para verificar:
+
+1. Lee el cuerpo crudo de la solicitud como string.
+2. Calcula un HMAC-SHA256 de ese string usando tu `integrityKey`.
+3. Compara el resultado con el header `X-Signature`. Si coinciden, la solicitud es autentica.
+
+### Ejemplo (Node.js)
+
+```javascript
+const crypto = require("crypto");
+
+app.post("/webhooks", (req, res) => {
+  const signature = req.headers["x-signature"];
+  const rawBody = JSON.stringify(req.body);
+  const integrityKey = process.env.PALOMMA_INTEGRITY_KEY;
+
+  const expected = crypto
+    .createHmac("sha256", integrityKey)
+    .update(rawBody)
+    .digest("hex");
+
+  if (signature !== expected) {
+    return res.status(401).json({ error: "Firma invalida" });
+  }
+
+  // Confirmar recepcion inmediatamente, procesar despues
+  res.status(200).json({ ok: true });
+
+  // TODO: procesar req.body de forma asincrona
+});
+```
+
+---
+
+## Reintentos
+
+Si una entrega falla, Palomma reintentara hasta **4 veces**. El tiempo de espera entre reintentos aumenta con cada intento:
+
+| Intento | Espera aproximada |
+|---------|------------------|
+| 1er reintento | ~1 minuto |
+| 2do reintento | ~5 minutos |
+| 3er reintento | ~25 minutos |
+| 4to reintento | ~2 horas |
+
+Los tiempos exactos varian ligeramente para que los reintentos no lleguen todos al mismo instante a tu servidor.
+
+## Manejo de duplicados
+
+En los reintentos, el `webhookId` se mantiene igual pero el `timestamp` se actualiza. Almacena el `webhookId` despues de procesar un evento exitosamente. Si recibes el mismo `webhookId` de nuevo, ignoralo.
+
+<Warning>
+  Asegurate de no procesar el mismo webhook mas de una vez.
+</Warning>

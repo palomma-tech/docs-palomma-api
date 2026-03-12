@@ -1,0 +1,42 @@
+---
+title: General
+---
+
+## Overview
+
+**Invoices** are payment requests you create for your customers. Each invoice generates a unique URL that you share with the customer so they can pay. Once paid, the funds are included in your next settlement.
+
+**Settlements** are summaries of funds collected for a given date and cycle, including the amount collected, fees, adjustments, and the net payment you receive.
+
+## Base URL
+
+- **Production:** `https://api.palomma.com`
+- **Sandbox:** `https://sandbox.api.palomma.com`
+
+## Authentication
+
+Every request must include an `Authorization` header with your API key:
+
+```
+Authorization: Bearer <apiKey>
+```
+
+Contact the Palomma team if you need an API key.
+
+## Invoice limits
+
+Amounts must be between **3,000 COP** and **550,000,000 COP**.
+
+<Tip>
+  Contact us if you need different limits.
+</Tip>
+
+## Settlements
+
+Once an invoice is paid, the funds are settled within the next date. Exact times depend on the payment method.
+
+There are 5 settlement cycles per day at **11:00, 13:00, 16:00, 18:00, and 20:00** (cycle values: `11`, `13`, `16`, `18`, `20`). Each payment method has its own schedule. Check the invoice's `settlementDate` and `settlementTime` after payment to see when funds will settle.
+
+## Pagination
+
+List endpoints use cursor-based pagination. Set page size with the `limit` parameter (1--100, default 20). The response includes a `cursor`; pass it in the next request to get the following page. When `cursor` is `null`, there are no more results.

@@ -1,0 +1,39 @@
+---
+title: Inicio rapido
+---
+
+Crea tu primera factura en tres pasos.
+
+## 1. Crear una factura
+
+Envia una solicitud `POST` a `/invoices`:
+
+```bash
+curl -X POST https://api.palomma.com/invoices \
+  -H "Authorization: Bearer TU_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "reference": "INV-2026-0001",
+    "amount": 1850000,
+    "description": "Canon de arrendamiento marzo 2026",
+    "redirectUrl": "https://merchant.example.com/payments/return",
+    "customerDocumentNumber": "900123456"
+  }'
+```
+
+La respuesta incluye un `paymentUrl`.
+
+## 2. Redirigir al cliente
+
+Usa el `paymentUrl` para redirigir a tu cliente directamente a la pagina de pago de Palomma (ej. despues de que haga clic en "Pagar" en tu app). El link expira 5 minutos despues de la creacion, por lo que esta pensado para redireccion inmediata, no para enviar por email o WhatsApp.
+
+## 3. Hacer seguimiento
+
+<Tabs>
+<Tab title="Polling">
+Llama a `GET /invoices/{id}`. Cuando `status` sea `paid`, la factura fue pagada.
+</Tab>
+<Tab title="Webhooks">
+Registra una URL de webhook para recibir notificaciones cuando las facturas alcancen un estado final o cuando las liquidaciones esten listas. Ver la pagina de [Webhooks](/es/webhooks/explanation) para mas detalles.
+</Tab>
+</Tabs>

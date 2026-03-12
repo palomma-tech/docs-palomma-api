@@ -1,0 +1,116 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Palomma",
+  "logo": {
+    "dark": "/logo/palomma-logo.png",
+    "light": "/logo/palomma-logo.png"
+  },
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#4012AB",
+    "light": "#8F62E5",
+    "dark": "#4012AB"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Email",
+        "href": "mailto:comercios@palomma.com"
+      },
+      {
+        "label": "WhatsApp",
+        "href": "https://wa.me/message/HQIMYANUOIVCI1"
+      }
+    ]
+  },
+  "navigation": {
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Portal",
+          "icon": "gauge",
+          "href": "https://portal.palomma.com"
+        }
+      ]
+    },
+    "languages": [
+      {
+        "language": "en",
+        "groups": [
+          {
+            "group": "Introduction",
+            "pages": ["en/introduction/about", "en/introduction/quickstart"]
+          },
+          {
+            "group": "API Documentation",
+            "pages": [
+              "en/api-documentation/general",
+              {
+                "group": "Invoices",
+                "openapi": "openapi.yaml",
+                "pages": [
+                  "POST /invoices",
+                  "GET /invoices",
+                  "GET /invoices/{id}"
+                ]
+              },
+              {
+                "group": "Settlements",
+                "openapi": "openapi.yaml",
+                "pages": [
+                  "GET /settlements/{date}/{cycle}"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Webhooks",
+            "pages": ["en/webhooks/explanation"]
+          }
+        ]
+      },
+      {
+        "language": "es",
+        "groups": [
+          {
+            "group": "Introduccion",
+            "pages": ["es/introduction/about", "es/introduction/quickstart"]
+          },
+          {
+            "group": "Documentacion API",
+            "pages": [
+              "es/api-documentation/general",
+              {
+                "group": "Facturas",
+                "openapi": "openapi-es.yaml",
+                "pages": [
+                  "POST /invoices",
+                  "GET /invoices",
+                  "GET /invoices/{id}"
+                ]
+              },
+              {
+                "group": "Liquidaciones",
+                "openapi": "openapi-es.yaml",
+                "pages": [
+                  "GET /settlements/{date}/{cycle}"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Webhooks",
+            "pages": ["es/webhooks/explanation"]
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "socials": {
+      "instagram": "https://www.instagram.com/palommapay/",
+      "linkedin": "https://www.linkedin.com/company/palomma/"
+    }
+  }
+}

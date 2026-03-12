@@ -1,0 +1,204 @@
+---
+title: Webhooks
+---
+
+Palomma sends webhook events when something important happens. Register a URL with the Palomma team and we will send an HTTP POST with a JSON body every time an event occurs.
+
+<Info>
+  To enable webhooks, contact the Palomma team and provide the URL where you
+  want to receive events.
+</Info>
+
+## When we notify
+
+We only send webhooks on **final status**. Each invoice and settlement triggers a single notification. You will not receive multiple webhooks as a resource moves through intermediate states.
+
+## Response requirements
+
+Your endpoint must return HTTP **200** within **5 seconds**. If we don't get a response in time, the delivery is considered failed and will be retried. We recommend acknowledging receipt immediately and processing the payload asynchronously.
+
+---
+
+## Request structure
+
+Every webhook is a `POST` request with a JSON body containing these top-level fields:
+
+<ResponseField name="webhookId" type="string">
+  Unique identifier for this notification. The same `webhookId` is reused across
+  retries so you can deduplicate.
+</ResponseField>
+<ResponseField name="timestamp" type="string">
+  ISO 8601 timestamp of when this delivery attempt was made (updated on each retry).
+</ResponseField>
+<ResponseField name="type" type="string">
+  Event type: `invoice` or `settlement`.
+</ResponseField>
+<ResponseField name="data" type="object">
+  Event payload. The shape depends on `type` (see below).
+</ResponseField>
+
+### Event payloads
+
+<Tabs>
+<Tab title="Invoice">
+
+Sent when an invoice reaches its final status (`type: "invoice"`).
+
+<ResponseField name="id" type="string">
+  Unique invoice identifier.
+</ResponseField>
+<ResponseField name="reference" type="string">
+  Merchant-provided invoice reference.
+</ResponseField>
+<ResponseField name="status" type="string">
+  One of `pending`, `ready`, `paid`, `cancelled`, or `chargeback`.
+</ResponseField>
+<ResponseField name="amount" type="number">
+  Invoice amount in COP.
+</ResponseField>
+<ResponseField name="description" type="string">
+  Invoice description.
+</ResponseField>
+<ResponseField name="contract" type="string">
+  Contract identifier.
+</ResponseField>
+<ResponseField name="expirationDate" type="string">
+  Payment link expiration datetime (ISO 8601).
+</ResponseField>
+<ResponseField name="customerDocumentNumber" type="string">
+  Customer's document number.
+</ResponseField>
+<ResponseField name="customerName" type="string">
+  Customer's display name.
+</ResponseField>
+<ResponseField name="createdAt" type="string">
+  Invoice creation datetime (ISO 8601).
+</ResponseField>
+<ResponseField name="paymentDate" type="string">
+  When the invoice was paid. Present on paid and chargeback invoices.
+</ResponseField>
+<ResponseField name="paymentMethod" type="string">
+  Payment method used. Present on paid and chargeback invoices.
+</ResponseField>
+<ResponseField name="paymentSource" type="string">
+  One of `whatsapp`, `portal`, or `link`. Present on paid and chargeback invoices.
+</ResponseField>
+<ResponseField name="paymentAmount" type="number">
+  Amount actually paid in COP. Present on paid and chargeback invoices.
+</ResponseField>
+<ResponseField name="settlementDate" type="string">
+  Settlement date. Present once the invoice is settled.
+</ResponseField>
+<ResponseField name="settlementTime" type="string">
+  Settlement cycle. Present once the invoice is settled.
+</ResponseField>
+<ResponseField name="paymentId" type="string">
+  Payment identifier. Present on paid and chargeback invoices.
+</ResponseField>
+<ResponseField name="paymentUrl" type="string">
+  Palomma hosted payment page URL for this invoice.
+</ResponseField>
+
+</Tab>
+<Tab title="Settlement">
+
+Sent when a settlement reaches its final status (`type: "settlement"`).
+
+<ResponseField name="date" type="string">
+  Settlement date.
+</ResponseField>
+<ResponseField name="cycle" type="string">
+  Settlement cycle.
+</ResponseField>
+<ResponseField name="status" type="string">
+  One of `processing`, `paid`, `credited`, or `error`.
+</ResponseField>
+<ResponseField name="numberOfInvoices" type="number">
+  Number of invoices in the settlement.
+</ResponseField>
+<ResponseField name="amountCollected" type="number">
+  Total amount collected (COP).
+</ResponseField>
+<ResponseField name="fees" type="number">
+  Fees applied (COP).
+</ResponseField>
+<ResponseField name="feesPostpaid" type="boolean">
+  Whether fees are postpaid.
+</ResponseField>
+<ResponseField name="adjustments" type="number">
+  Adjustments applied (COP).
+</ResponseField>
+<ResponseField name="gateway" type="boolean">
+  Whether the settlement went through the gateway.
+</ResponseField>
+<ResponseField name="paymentAmount" type="number">
+  Net payment amount (COP).
+</ResponseField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Verifying signatures
+
+Every webhook includes an `X-Signature` header so you can confirm the request came from Palomma. The signature is an HMAC-SHA256 of the raw request body, using the `integrityKey` we assigned to your account.
+
+<Warning>
+  Always verify the signature before processing the event.
+</Warning>
+
+To verify:
+
+1. Read the raw request body as a string.
+2. Compute an HMAC-SHA256 of that string using your `integrityKey`.
+3. Compare the result to the `X-Signature` header. If they match, the request is authentic.
+
+### Example (Node.js)
+
+```javascript
+const crypto = require("crypto");
+
+app.post("/webhooks", (req, res) => {
+  const signature = req.headers["x-signature"];
+  const rawBody = JSON.stringify(req.body);
+  const integrityKey = process.env.PALOMMA_INTEGRITY_KEY;
+
+  const expected = crypto
+    .createHmac("sha256", integrityKey)
+    .update(rawBody)
+    .digest("hex");
+
+  if (signature !== expected) {
+    return res.status(401).json({ error: "Invalid signature" });
+  }
+
+  // Acknowledge immediately, process later
+  res.status(200).json({ ok: true });
+
+  // TODO: handle req.body asynchronously
+});
+```
+
+---
+
+## Retries
+
+If a delivery fails, Palomma will retry up to **4 times**. The wait between retries increases each time:
+
+| Attempt | Approximate wait |
+|---------|-----------------|
+| 1st retry | ~1 minute |
+| 2nd retry | ~5 minutes |
+| 3rd retry | ~25 minutes |
+| 4th retry | ~2 hours |
+
+The exact timing varies slightly so that retries don't all hit your server at the same instant.
+
+## Handling duplicates
+
+On retries, the `webhookId` stays the same but the `timestamp` is updated. Store the `webhookId` after you successfully process an event. If you receive the same `webhookId` again, skip it.
+
+<Warning>
+  Make sure you do not process the same webhook more than once.
+</Warning>

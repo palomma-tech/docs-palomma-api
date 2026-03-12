@@ -1,0 +1,42 @@
+---
+title: General
+---
+
+## Resumen
+
+**Facturas** son solicitudes de pago que creas para tus clientes. Cada factura genera una URL unica que compartes con el cliente para que pueda pagar. Una vez pagada, los fondos se incluyen en tu proxima liquidacion.
+
+**Liquidaciones** son resumenes de los fondos recaudados para una fecha y ciclo dados, incluyendo el monto recaudado, comisiones, ajustes y el pago neto que recibes.
+
+## URL Base
+
+- **Produccion:** `https://api.palomma.com`
+- **Sandbox:** `https://sandbox.api.palomma.com`
+
+## Autenticacion
+
+Cada solicitud debe incluir un header `Authorization` con tu API key:
+
+```
+Authorization: Bearer <apiKey>
+```
+
+Contacta al equipo de Palomma si necesitas un API key.
+
+## Limites de facturas
+
+Los montos deben estar entre **3.000 COP** y **550.000.000 COP**.
+
+<Tip>
+  Contactanos si necesitas limites diferentes.
+</Tip>
+
+## Liquidaciones
+
+Una vez que una factura es pagada, los fondos se liquidan dentro de la siguiente fecha. Los horarios exactos dependen del metodo de pago.
+
+Hay 5 ciclos de liquidacion por dia a las **11:00, 13:00, 16:00, 18:00 y 20:00** (valores de ciclo: `11`, `13`, `16`, `18`, `20`). Cada metodo de pago tiene su propio calendario. Revisa `settlementDate` y `settlementTime` en la factura despues del pago para ver cuando se liquidaran los fondos.
+
+## Paginacion
+
+Los endpoints de listado usan paginacion basada en cursor. Define el tamano de pagina con el parametro `limit` (1--100, por defecto 20). La respuesta incluye un `cursor`; pasalo en la siguiente solicitud para obtener la siguiente pagina. Cuando `cursor` es `null`, no hay mas resultados.

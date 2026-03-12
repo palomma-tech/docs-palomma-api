@@ -1,0 +1,39 @@
+---
+title: Quickstart
+---
+
+Create your first invoice in three steps.
+
+## 1. Create an invoice
+
+Send a `POST` request to `/invoices`:
+
+```bash
+curl -X POST https://api.palomma.com/invoices \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "reference": "INV-2026-0001",
+    "amount": 1850000,
+    "description": "Canon de arrendamiento marzo 2026",
+    "redirectUrl": "https://merchant.example.com/payments/return",
+    "customerDocumentNumber": "900123456"
+  }'
+```
+
+The response includes a `paymentUrl`.
+
+## 2. Redirect the customer
+
+Use the `paymentUrl` to redirect your customer straight to Palomma's payment page (e.g. after they click "Pay" in your app). The link expires 5 minutes after creation, so it's meant for immediate redirection rather than sending via email or WhatsApp.
+
+## 3. Track status
+
+<Tabs>
+<Tab title="Polling">
+Call `GET /invoices/{id}`. When `status` is `paid`, the invoice has been paid.
+</Tab>
+<Tab title="Webhooks">
+Register a webhook URL to receive notifications when invoices reach a final status or when settlements are ready. See the [Webhooks](/en/webhooks/explanation) page for details.
+</Tab>
+</Tabs>
