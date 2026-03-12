@@ -36,41 +36,6 @@
     },
     "languages": [
       {
-        "language": "en",
-        "groups": [
-          {
-            "group": "Introduction",
-            "pages": ["en/introduction/about", "en/introduction/quickstart"]
-          },
-          {
-            "group": "API Documentation",
-            "pages": [
-              "en/api-documentation/general",
-              {
-                "group": "Invoices",
-                "openapi": "openapi.yaml",
-                "pages": [
-                  "POST /invoices",
-                  "GET /invoices",
-                  "GET /invoices/{id}"
-                ]
-              },
-              {
-                "group": "Settlements",
-                "openapi": "openapi.yaml",
-                "pages": [
-                  "GET /settlements/{date}/{cycle}"
-                ]
-              }
-            ]
-          },
-          {
-            "group": "Webhooks",
-            "pages": ["en/webhooks/explanation"]
-          }
-        ]
-      },
-      {
         "language": "es",
         "groups": [
           {
@@ -102,6 +67,41 @@
           {
             "group": "Webhooks",
             "pages": ["es/webhooks/explanation"]
+          }
+        ]
+      },
+      {
+        "language": "en",
+        "groups": [
+          {
+            "group": "Introduction",
+            "pages": ["en/introduction/about", "en/introduction/quickstart"]
+          },
+          {
+            "group": "API Documentation",
+            "pages": [
+              "en/api-documentation/general",
+              {
+                "group": "Invoices",
+                "openapi": "openapi.yaml",
+                "pages": [
+                  "POST /invoices",
+                  "GET /invoices",
+                  "GET /invoices/{id}"
+                ]
+              },
+              {
+                "group": "Settlements",
+                "openapi": "openapi.yaml",
+                "pages": [
+                  "GET /settlements/{date}/{cycle}"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Webhooks",
+            "pages": ["en/webhooks/explanation"]
           }
         ]
       }
