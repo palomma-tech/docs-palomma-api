@@ -51,7 +51,7 @@ Sent when an invoice reaches its final status (`type: "invoice"`).
   Merchant-provided invoice reference.
 </ResponseField>
 <ResponseField name="status" type="string">
-  One of `pending`, `ready`, `paid`, `cancelled`, or `chargeback`.
+  One of `ready`, `paid`, `cancelled`, or `chargeback`.
 </ResponseField>
 <ResponseField name="amount" type="number">
   Invoice amount in COP.
@@ -87,10 +87,10 @@ Sent when an invoice reaches its final status (`type: "invoice"`).
   Amount actually paid in COP. Present on paid and chargeback invoices.
 </ResponseField>
 <ResponseField name="settlementDate" type="string">
-  Settlement date. Present once the invoice is settled.
+  Expected settlement date. Present on paid and chargeback invoices.
 </ResponseField>
 <ResponseField name="settlementTime" type="string">
-  Settlement cycle. Present once the invoice is settled.
+  Expected settlement cycle. Present on paid and chargeback invoices.
 </ResponseField>
 <ResponseField name="paymentId" type="string">
   Payment identifier. Present on paid and chargeback invoices.

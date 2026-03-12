@@ -51,7 +51,7 @@ Se envia cuando una factura alcanza su estado final (`type: "invoice"`).
   Referencia de la factura proporcionada por el comercio.
 </ResponseField>
 <ResponseField name="status" type="string">
-  Uno de `pending`, `ready`, `paid`, `cancelled` o `chargeback`.
+  Uno de `ready`, `paid`, `cancelled` o `chargeback`.
 </ResponseField>
 <ResponseField name="amount" type="number">
   Monto de la factura en COP.
@@ -75,25 +75,25 @@ Se envia cuando una factura alcanza su estado final (`type: "invoice"`).
   Fecha y hora de creacion de la factura (ISO 8601).
 </ResponseField>
 <ResponseField name="paymentDate" type="string">
-  Cuando se pago la factura. Presente en facturas pagadas y con chargeback.
+  Cuando se pago la factura. Presente en facturas pagadas y con contracargo.
 </ResponseField>
 <ResponseField name="paymentMethod" type="string">
-  Metodo de pago utilizado. Presente en facturas pagadas y con chargeback.
+  Metodo de pago utilizado. Presente en facturas pagadas y con contracargo.
 </ResponseField>
 <ResponseField name="paymentSource" type="string">
-  Uno de `whatsapp`, `portal` o `link`. Presente en facturas pagadas y con chargeback.
+  Uno de `whatsapp`, `portal` o `link`. Presente en facturas pagadas y con contracargo.
 </ResponseField>
 <ResponseField name="paymentAmount" type="number">
-  Monto realmente pagado en COP. Presente en facturas pagadas y con chargeback.
+  Monto realmente pagado en COP. Presente en facturas pagadas y con contracargo.
 </ResponseField>
 <ResponseField name="settlementDate" type="string">
-  Fecha de liquidacion. Presente una vez que la factura esta liquidada.
+  Fecha esperada de liquidacion. Presente en facturas pagadas y con contracargo.
 </ResponseField>
 <ResponseField name="settlementTime" type="string">
-  Ciclo de liquidacion. Presente una vez que la factura esta liquidada.
+  Ciclo esperado de liquidacion. Presente en facturas pagadas y con contracargo.
 </ResponseField>
 <ResponseField name="paymentId" type="string">
-  Identificador del pago. Presente en facturas pagadas y con chargeback.
+  Identificador del pago. Presente en facturas pagadas y con contracargo.
 </ResponseField>
 <ResponseField name="paymentUrl" type="string">
   URL de la pagina de pago de Palomma para esta factura.

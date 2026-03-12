@@ -367,8 +367,8 @@ components:
           description: Referencia de factura proporcionada por el comercio.
         status:
           type: string
-          description: "Estado de la factura: `pending` (creada, aun no procesada), `ready` (link de pago activo), `paid` (pagada), `cancelled` (cancelada) o `chargeback` (contracargo)."
-          enum: [pending, ready, paid, cancelled, chargeback]
+          description: "Estado de la factura: `ready` (link de pago activo), `paid` (pagada), `cancelled` (cancelada) o `chargeback` (contracargo)."
+          enum: [ready, paid, cancelled, chargeback]
         amount:
           type: number
           description: Monto de la factura en COP.
@@ -407,10 +407,10 @@ components:
           description: Monto efectivamente pagado en COP. Presente en facturas pagadas y con contracargo.
         settlementDate:
           type: string
-          description: Fecha de liquidacion (`YYYY-MM-DD`). Presente una vez la factura esta liquidada.
+          description: Fecha esperada de liquidacion (`YYYY-MM-DD`). Presente en facturas pagadas y con contracargo.
         settlementTime:
           type: string
-          description: Identificador del ciclo de liquidacion. Presente una vez la factura esta liquidada.
+          description: Ciclo esperado de liquidacion. Presente en facturas pagadas y con contracargo.
         paymentId:
           type: string
           description: Identificador del pago. Presente en facturas pagadas y con contracargo.

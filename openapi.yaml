@@ -367,8 +367,8 @@ components:
           description: Merchant-provided invoice reference.
         status:
           type: string
-          description: "Invoice status: `pending` (created, not yet processed), `ready` (payment link active), `paid`, `cancelled`, or `chargeback`."
-          enum: [pending, ready, paid, cancelled, chargeback]
+          description: "Invoice status: `ready` (payment link active), `paid`, `cancelled`, or `chargeback`."
+          enum: [ready, paid, cancelled, chargeback]
         amount:
           type: number
           description: Invoice amount in COP.
@@ -407,10 +407,10 @@ components:
           description: Amount actually paid in COP. Present on paid and chargeback invoices.
         settlementDate:
           type: string
-          description: Settlement date (`YYYY-MM-DD`). Present once the invoice is settled.
+          description: Expected settlement date (`YYYY-MM-DD`). Present on paid and chargeback invoices.
         settlementTime:
           type: string
-          description: Settlement cycle identifier. Present once the invoice is settled.
+          description: Expected settlement cycle. Present on paid and chargeback invoices.
         paymentId:
           type: string
           description: Payment identifier. Present on paid and chargeback invoices.
