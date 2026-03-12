@@ -29,7 +29,7 @@
       "anchors": [
         {
           "anchor": "Portal",
-          "icon": "gauge",
+          "icon": "chart-column",
           "href": "https://portal.palomma.com"
         }
       ]
