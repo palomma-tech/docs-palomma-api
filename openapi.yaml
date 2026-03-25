@@ -6,9 +6,9 @@ info:
   contact:
     name: Palomma
 servers:
-  - url: https://api.palomma.com
+  - url: https://api.palomma.com/v1
     description: Production
-  - url: https://sandbox.api.palomma.com
+  - url: https://sandbox.api.palomma.com/v1
     description: Sandbox
 security:
   - bearerAuth: []

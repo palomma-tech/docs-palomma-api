@@ -9,7 +9,7 @@ Crea tu primera factura en tres pasos.
 Envia una solicitud `POST` a `/invoices`:
 
 ```bash
-curl -X POST https://api.palomma.com/invoices \
+curl -X POST https://api.palomma.com/v1/invoices \
   -H "Authorization: Bearer TU_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -30,10 +30,13 @@ Usa el `paymentUrl` para redirigir a tu cliente directamente a la pagina de pago
 ## 3. Hacer seguimiento
 
 <Tabs>
-<Tab title="Polling">
-Llama a `GET /invoices/{id}`. Cuando `status` sea `paid`, la factura fue pagada.
-</Tab>
-<Tab title="Webhooks">
-Registra una URL de webhook para recibir notificaciones cuando las facturas alcancen un estado final o cuando las liquidaciones esten listas. Ver la pagina de [Webhooks](/es/webhooks/explanation) para mas detalles.
-</Tab>
+  <Tab title="Polling">
+    Llama a `GET /invoices/{id}`. Cuando `status` sea `paid`, la factura fue
+    pagada.
+  </Tab>
+  <Tab title="Webhooks">
+    Registra una URL de webhook para recibir notificaciones cuando las facturas
+    alcancen un estado final o cuando las liquidaciones esten listas. Ver la
+    pagina de [Webhooks](/es/webhooks/explanation) para mas detalles.
+  </Tab>
 </Tabs>
